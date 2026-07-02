@@ -2,7 +2,7 @@ import chalk from 'chalk';
 import ora from 'ora';
 import { configureClients } from '../lib/clients.js';
 import { getServer, saveServer } from '../lib/config.js';
-import { fetchRegistry, findServer, resolveLaunch } from '../lib/registry.js';
+import { fetchRegistry, findServer, resolveLaunch, type LaunchSpec, type Runtime } from '../lib/registry.js';
 
 export interface InstallOptions {
   /** Install any npm package as an MCP server, bypassing the registry. */
@@ -15,10 +15,8 @@ export interface InstallOptions {
 interface InstallTarget {
   name: string;
   description: string;
-  /** What npx runs: an npm package name or a "github:owner/repo" specifier. */
-  target: string;
-  command: string;
-  args: string[];
+  runtime: Runtime;
+  launch: LaunchSpec;
 }
 
 /** Normalize "owner/repo", "github:owner/repo" or a github.com URL to "owner/repo". */
@@ -54,9 +52,8 @@ export async function installCommand(serverName: string | undefined, options: In
       target = {
         name: serverName ?? options.npm,
         description: `Custom install from npm: ${options.npm}`,
-        target: options.npm,
-        command: 'npx',
-        args: ['-y', options.npm],
+        runtime: 'node',
+        launch: { kind: 'stdio', target: options.npm, command: 'npx', args: ['-y', options.npm] },
       };
     } else if (options.github !== undefined) {
       const repo = parseGithubRepo(options.github);
@@ -70,9 +67,8 @@ export async function installCommand(serverName: string | undefined, options: In
       target = {
         name: serverName ?? (match ? match[1] : repo),
         description: `Custom install from GitHub: ${repo}`,
-        target: spec,
-        command: 'npx',
-        args: ['-y', spec],
+        runtime: 'node',
+        launch: { kind: 'stdio', target: spec, command: 'npx', args: ['-y', spec] },
       };
     } else {
       const name = serverName ?? '';
@@ -93,13 +89,11 @@ export async function installCommand(serverName: string | undefined, options: In
         process.exitCode = 1;
         return;
       }
-      const launch = resolveLaunch(server);
       target = {
         name: server.name,
         description: server.description,
-        target: launch.target,
-        command: launch.command,
-        args: [...launch.args],
+        runtime: server.runtime,
+        launch: resolveLaunch(server),
       };
     }
 
@@ -108,20 +102,23 @@ export async function installCommand(serverName: string | undefined, options: In
       return;
     }
 
+    const { launch } = target;
+    const definition =
+      launch.kind === 'stdio' ? { command: launch.command, args: [...launch.args] } : { url: launch.url };
     saveServer({
       name: target.name,
       description: target.description,
-      package: target.target,
-      command: target.command,
-      args: [...target.args],
+      package: launch.target,
+      runtime: target.runtime,
       installedAt: new Date().toISOString(),
+      ...definition,
     });
-    spinner.succeed(`Installed ${chalk.green(target.name)} ${chalk.dim(`(${target.target})`)}`);
-    for (const result of configureClients(target.name, { command: target.command, args: [...target.args] })) {
+    spinner.succeed(`Installed ${chalk.green(target.name)} ${chalk.dim(`(${launch.target})`)}`);
+    for (const result of configureClients(target.name, definition)) {
       if (result.status === 'configured') {
         console.log(`${chalk.green(`✓ Configured in ${result.client}`)} ${chalk.dim(`→ ${result.configPath}`)}`);
       } else if (result.status === 'skipped') {
-        console.log(chalk.dim(`- ${result.client} not detected — skipped`));
+        console.log(chalk.dim(`- ${result.client} ${result.reason} — skipped`));
       } else {
         console.log(chalk.yellow(`! ${result.client}: ${result.reason}`));
       }

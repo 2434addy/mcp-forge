@@ -5,13 +5,15 @@
       "description": "Combine multiple MCP servers into a single endpoint with tool filtering",
       "package": null,
       "github": "nazar256/combine-mcp",
+      "runtime": "node",
       "category": "aggregators"
     },
     {
       "name": "magg",
       "description": "Meta-MCP hub: discover, install, and orchestrate MCP servers",
-      "package": null,
+      "package": "magg",
       "github": "sitbon/magg",
+      "runtime": "python",
       "category": "aggregators"
     },
     {
@@ -19,6 +21,7 @@
       "description": "Self-hosted MCP registry and proxy for enterprise agents",
       "package": null,
       "github": "mcpjungle/MCPJungle",
+      "runtime": "node",
       "category": "aggregators"
     },
     {
@@ -26,6 +29,7 @@
       "description": "Connect 2,500 APIs with 8,000+ prebuilt tools",
       "package": null,
       "github": "PipedreamHQ/pipedream",
+      "runtime": "node",
       "category": "aggregators"
     },
     {
@@ -33,6 +37,7 @@
       "description": "Proxy combining multiple MCP servers into a single MCP",
       "package": null,
       "github": "VeriTeknik/pluggedin-mcp-proxy",
+      "runtime": "node",
       "category": "aggregators"
     },
     {
@@ -40,6 +45,7 @@
       "description": "Dynamically search and call tools via the UnifAI Network",
       "package": null,
       "github": "unifai-network/unifai-mcp-server",
+      "runtime": "node",
       "category": "aggregators"
     },
     {
@@ -47,6 +53,7 @@
       "description": "Chat with any OpenAI-compatible API (Perplexity, Groq, xAI)",
       "package": null,
       "github": "pyroprompts/any-chat-completions-mcp",
+      "runtime": "node",
       "category": "ai-services"
     },
     {
@@ -54,13 +61,15 @@
       "description": "(Archived reference server) Retrieval from AWS Knowledge Base via Bedrock Agent Runtime",
       "package": null,
       "github": "modelcontextprotocol/servers-archived",
+      "runtime": "node",
       "category": "ai-services"
     },
     {
       "name": "chroma",
       "description": "Embeddings, vector search, document and full-text storage",
-      "package": null,
+      "package": "chroma-mcp",
       "github": "chroma-core/chroma-mcp",
+      "runtime": "python",
       "category": "ai-services"
     },
     {
@@ -68,6 +77,7 @@
       "description": "Use HuggingFace Spaces (images, audio, text) from your MCP client",
       "package": null,
       "github": "evalstate/mcp-hfspace",
+      "runtime": "node",
       "category": "ai-services"
     },
     {
@@ -75,20 +85,23 @@
       "description": "Connect to a managed index on LlamaCloud",
       "package": null,
       "github": "run-llama/mcp-server-llamacloud",
+      "runtime": "node",
       "category": "ai-services"
     },
     {
       "name": "needle",
       "description": "Production-ready RAG to search and retrieve from your documents",
-      "package": null,
+      "package": "needle-mcp",
       "github": "needle-ai/needle-mcp",
+      "runtime": "python",
       "category": "ai-services"
     },
     {
       "name": "openai",
       "description": "Query OpenAI models directly from Claude",
-      "package": null,
+      "package": "mcp-server-openai",
       "github": "pierrebrunelle/mcp-server-openai",
+      "runtime": "python",
       "category": "ai-services"
     },
     {
@@ -96,6 +109,7 @@
       "description": "Real-time web-wide research via Perplexity's Sonar API",
       "package": null,
       "github": "ppl-ai/modelcontextprotocol",
+      "runtime": "node",
       "category": "ai-services"
     },
     {
@@ -103,13 +117,15 @@
       "description": "Advanced retrieval, deep research, and anything-to-markdown extraction",
       "package": null,
       "github": "vectorize-io/vectorize-mcp-server",
+      "runtime": "node",
       "category": "ai-services"
     },
     {
       "name": "zenml",
       "description": "Chat with your MLOps and LLMOps pipelines via ZenML",
-      "package": null,
+      "package": "mcp-zenml",
       "github": "zenml-io/mcp-zenml",
+      "runtime": "python",
       "category": "ai-services"
     },
     {
@@ -117,6 +133,7 @@
       "description": "Turn Make scenarios into callable tools for AI assistants",
       "package": null,
       "github": "integromat/make-mcp-server",
+      "runtime": "node",
       "category": "automation"
     },
     {
@@ -124,6 +141,7 @@
       "description": "Local browser control via an MCP server paired with a browser extension",
       "package": null,
       "github": "eyalzh/browser-control-mcp",
+      "runtime": "node",
       "category": "browser-automation"
     },
     {
@@ -131,6 +149,7 @@
       "description": "Automate your local browser",
       "package": null,
       "github": "browsermcp/mcp",
+      "runtime": "node",
       "category": "browser-automation"
     },
     {
@@ -138,6 +157,7 @@
       "description": "Automate browser interactions in the cloud",
       "package": null,
       "github": "browserbase/mcp-server-browserbase",
+      "runtime": "node",
       "category": "browser-automation"
     },
     {
@@ -145,6 +165,7 @@
       "description": "Scalable browser automation platform for AI agents",
       "package": null,
       "github": "hyperbrowserai/mcp",
+      "runtime": "node",
       "category": "browser-automation"
     },
     {
@@ -152,6 +173,7 @@
       "description": "Official Playwright MCP server for browser automation",
       "package": "@playwright/mcp",
       "github": "microsoft/playwright-mcp",
+      "runtime": "node",
       "category": "browser-automation"
     },
     {
@@ -159,6 +181,7 @@
       "description": "Browser automation and web scraping using Playwright",
       "package": null,
       "github": "executeautomation/mcp-playwright",
+      "runtime": "node",
       "category": "browser-automation"
     },
     {
@@ -166,13 +189,15 @@
       "description": "(Archived reference server) Browser automation and web scraping",
       "package": null,
       "github": "modelcontextprotocol/servers-archived",
+      "runtime": "node",
       "category": "browser-automation"
     },
     {
       "name": "skyvern",
       "description": "Let your LLM control the browser",
-      "package": null,
+      "package": "skyvern",
       "github": "Skyvern-AI/skyvern",
+      "runtime": "python",
       "category": "browser-automation"
     },
     {
@@ -180,6 +205,7 @@
       "description": "Core AWS MCP server: prompt understanding and server management",
       "package": null,
       "github": "awslabs/mcp",
+      "runtime": "node",
       "category": "cloud-platforms"
     },
     {
@@ -187,6 +213,7 @@
       "description": "Deploy and manage Cloudflare resources (Workers, KV, R2, D1)",
       "package": null,
       "github": "cloudflare/mcp-server-cloudflare",
+      "runtime": "node",
       "category": "cloud-platforms"
     },
     {
@@ -194,6 +221,7 @@
       "description": "Build and deploy Docker Compose projects to AWS, GCP, or DigitalOcean",
       "package": null,
       "github": "DefangLabs/defang",
+      "runtime": "node",
       "category": "cloud-platforms"
     },
     {
@@ -201,13 +229,15 @@
       "description": "Manage droplets, Kubernetes clusters, and container registries",
       "package": null,
       "github": "rohit-kaundal/digitalocean-mcp-server",
+      "runtime": "node",
       "category": "cloud-platforms"
     },
     {
       "name": "gcore",
       "description": "Gcore's official Cloud MCP server",
-      "package": null,
+      "package": "gcore-mcp-server",
       "github": "G-Core/gcore-mcp-server",
+      "runtime": "python",
       "category": "cloud-platforms"
     },
     {
@@ -215,13 +245,15 @@
       "description": "Official MCP server to deploy to Google Cloud Run",
       "package": null,
       "github": "GoogleCloudPlatform/cloud-run-mcp",
+      "runtime": "node",
       "category": "cloud-platforms"
     },
     {
       "name": "hetzner",
       "description": "Manage Hetzner Cloud resources via the Hetzner Cloud API",
-      "package": null,
+      "package": "mcp-hetzner",
       "github": "dkruyt/mcp-hetzner",
+      "runtime": "python",
       "category": "cloud-platforms"
     },
     {
@@ -229,6 +261,7 @@
       "description": "File access and search for Box",
       "package": null,
       "github": "hmk/box-mcp-server",
+      "runtime": "node",
       "category": "cloud-storage"
     },
     {
@@ -236,6 +269,7 @@
       "description": "Remote storage access: SFTP, S3, FTP, SMB, NFS, WebDAV, GIT",
       "package": null,
       "github": "mickael-kerjean/filestash",
+      "runtime": "node",
       "category": "cloud-storage"
     },
     {
@@ -243,20 +277,23 @@
       "description": "(Archived reference server) File access and search for Google Drive",
       "package": null,
       "github": "modelcontextprotocol/servers-archived",
+      "runtime": "node",
       "category": "cloud-storage"
     },
     {
       "name": "atlassian",
       "description": "Integration with Confluence and Jira",
-      "package": null,
+      "package": "mcp-atlassian",
       "github": "sooperset/mcp-atlassian",
+      "runtime": "python",
       "category": "communication"
     },
     {
       "name": "email",
       "description": "Send emails via Gmail, Outlook, Yahoo, and more, with attachments",
-      "package": null,
+      "package": "mcp-server-email",
       "github": "Shy2593666979/mcp-server-email",
+      "runtime": "python",
       "category": "communication"
     },
     {
@@ -264,6 +301,7 @@
       "description": "Integrate the LINE Messaging API with an AI agent",
       "package": null,
       "github": "line/line-bot-mcp-server",
+      "runtime": "node",
       "category": "communication"
     },
     {
@@ -271,6 +309,7 @@
       "description": "Integration with Linear's issue tracking system",
       "package": null,
       "github": "jerhadf/linear-mcp-server",
+      "runtime": "node",
       "category": "communication"
     },
     {
@@ -278,6 +317,7 @@
       "description": "Interact with the Mailgun API",
       "package": null,
       "github": "mailgun/mailgun-mcp-server",
+      "runtime": "node",
       "category": "communication"
     },
     {
@@ -285,6 +325,7 @@
       "description": "Integrate with the Mailtrap Email API",
       "package": null,
       "github": "railsware/mailtrap-mcp",
+      "runtime": "node",
       "category": "communication"
     },
     {
@@ -292,6 +333,7 @@
       "description": "Send and fetch ntfy notifications from AI agents",
       "package": null,
       "github": "gitmotion/ntfy-me-mcp",
+      "runtime": "node",
       "category": "communication"
     },
     {
@@ -299,6 +341,7 @@
       "description": "Powerful Slack MCP server with Stdio/SSE, no bot approval needed",
       "package": null,
       "github": "korotovsky/slack-mcp-server",
+      "runtime": "node",
       "category": "communication"
     },
     {
@@ -306,6 +349,7 @@
       "description": "Send messages, manage phone numbers, and configure your Twilio account",
       "package": null,
       "github": "twilio-labs/mcp",
+      "runtime": "node",
       "category": "communication"
     },
     {
@@ -313,13 +357,15 @@
       "description": "Access Cisco Webex messaging capabilities",
       "package": null,
       "github": "Kashyap-AI-ML-Solutions/webex-messaging-mcp-server",
+      "runtime": "node",
       "category": "communication"
     },
     {
       "name": "armor-crypto",
       "description": "Interface with multiple blockchains: staking, DeFi, swaps, wallets",
-      "package": null,
+      "package": "armor-crypto-mcp",
       "github": "armorwallet/armor-crypto-mcp",
+      "runtime": "python",
       "category": "crypto"
     },
     {
@@ -327,6 +373,7 @@
       "description": "Query onchain data: ERC20 tokens, transactions, contract state",
       "package": null,
       "github": "bankless/onchain-mcp",
+      "runtime": "node",
       "category": "crypto"
     },
     {
@@ -334,13 +381,15 @@
       "description": "Real-time cryptocurrency market data via CoinCap (no auth)",
       "package": null,
       "github": "QuantGeekDev/coincap-mcp",
+      "runtime": "node",
       "category": "crypto"
     },
     {
       "name": "coinmarket",
       "description": "CoinMarketCap API integration for cryptocurrency data",
-      "package": null,
+      "package": "coinmarket-service",
       "github": "anjor/coinmarket-mcp-server",
+      "runtime": "python",
       "category": "crypto"
     },
     {
@@ -348,6 +397,7 @@
       "description": "Real-time DEX analytics across 20+ blockchains",
       "package": null,
       "github": "coinpaprika/dexpaprika-mcp",
+      "runtime": "node",
       "category": "crypto"
     },
     {
@@ -355,6 +405,7 @@
       "description": "Read/write to 2k+ blockchains: data, contracts, transactions",
       "package": null,
       "github": "thirdweb-dev/ai",
+      "runtime": "node",
       "category": "crypto"
     },
     {
@@ -362,34 +413,39 @@
       "description": "Real-time crypto market data, trading signals, and predictions",
       "package": null,
       "github": "token-metrics/mcp",
+      "runtime": "node",
       "category": "crypto"
     },
     {
       "name": "dbt",
       "description": "Official dbt MCP server: project metadata, models, semantic layer",
-      "package": null,
+      "package": "dbt-mcp",
       "github": "dbt-labs/dbt-mcp",
+      "runtime": "python",
       "category": "data-platforms"
     },
     {
       "name": "hydrolix",
       "description": "Hydrolix time-series datalake schema exploration and querying",
-      "package": null,
+      "package": "mcp-hydrolix",
       "github": "hydrolix/mcp-hydrolix",
+      "runtime": "python",
       "category": "data-platforms"
     },
     {
       "name": "keboola",
       "description": "Build data workflows, integrations, and analytics on one platform",
-      "package": null,
+      "package": "keboola-mcp-server",
       "github": "keboola/keboola-mcp-server",
+      "runtime": "python",
       "category": "data-platforms"
     },
     {
       "name": "meilisearch",
       "description": "Interact and query with Meilisearch full-text and semantic search",
-      "package": null,
+      "package": "meilisearch-mcp",
       "github": "meilisearch/meilisearch-mcp",
+      "runtime": "python",
       "category": "data-platforms"
     },
     {
@@ -397,20 +453,23 @@
       "description": "Open-source MCP toolbox for easy, fast, secure database tools",
       "package": null,
       "github": "googleapis/genai-toolbox",
+      "runtime": "node",
       "category": "data-platforms"
     },
     {
       "name": "teradata",
       "description": "Manage the Teradata platform, data quality, and read/write to the database",
-      "package": null,
+      "package": "teradata-mcp-server",
       "github": "Teradata/teradata-mcp-server",
+      "runtime": "python",
       "category": "data-platforms"
     },
     {
       "name": "tinybird",
       "description": "Interact with a Tinybird serverless ClickHouse workspace",
-      "package": null,
+      "package": "mcp-tinybird",
       "github": "tinybirdco/mcp-tinybird",
+      "runtime": "python",
       "category": "data-platforms"
     },
     {
@@ -418,6 +477,7 @@
       "description": "Generate visual charts using AntV",
       "package": null,
       "github": "antvis/mcp-server-chart",
+      "runtime": "node",
       "category": "data-visualization"
     },
     {
@@ -425,6 +485,7 @@
       "description": "Generate visual charts using Apache ECharts",
       "package": null,
       "github": "hustcc/mcp-echarts",
+      "runtime": "node",
       "category": "data-visualization"
     },
     {
@@ -432,13 +493,15 @@
       "description": "Generate mermaid diagrams and charts dynamically",
       "package": null,
       "github": "hustcc/mcp-mermaid",
+      "runtime": "node",
       "category": "data-visualization"
     },
     {
       "name": "vegalite",
       "description": "Generate visualizations from data using the VegaLite renderer",
-      "package": null,
+      "package": "mcp-server-vegalite",
       "github": "isaacwasserman/mcp-vegalite-server",
+      "runtime": "python",
       "category": "data-visualization"
     },
     {
@@ -446,34 +509,39 @@
       "description": "Read and write access to Airtable databases with schema inspection",
       "package": null,
       "github": "domdomegg/airtable-mcp-server",
+      "runtime": "node",
       "category": "databases"
     },
     {
       "name": "bigquery",
       "description": "BigQuery integration with schema inspection and query capabilities",
-      "package": null,
+      "package": "mcp-server-bigquery",
       "github": "LucasHild/mcp-server-bigquery",
+      "runtime": "python",
       "category": "databases"
     },
     {
       "name": "clickhouse",
       "description": "Query your ClickHouse database server",
-      "package": null,
+      "package": "mcp-clickhouse",
       "github": "ClickHouse/mcp-clickhouse",
+      "runtime": "python",
       "category": "databases"
     },
     {
       "name": "cockroachdb",
       "description": "Manage, monitor, and query data in CockroachDB",
-      "package": null,
+      "package": "cockroachdb-mcp-server",
       "github": "amineelkouhen/mcp-cockroachdb",
+      "runtime": "python",
       "category": "databases"
     },
     {
       "name": "couchbase",
       "description": "Interact with data stored in Couchbase clusters using natural language",
-      "package": null,
+      "package": "couchbase-mcp-server",
       "github": "Couchbase-Ecosystem/mcp-server-couchbase",
+      "runtime": "python",
       "category": "databases"
     },
     {
@@ -481,13 +549,15 @@
       "description": "Universal database MCP server supporting mainstream databases",
       "package": null,
       "github": "bytebase/dbhub",
+      "runtime": "node",
       "category": "databases"
     },
     {
       "name": "dbutils",
       "description": "Unified database access for PostgreSQL and SQLite with a clean abstraction",
-      "package": null,
+      "package": "mcp-dbutils",
       "github": "donghao1393/mcp-dbutils",
+      "runtime": "python",
       "category": "databases"
     },
     {
@@ -495,27 +565,31 @@
       "description": "Official MCP server for version-controlled Dolt databases",
       "package": null,
       "github": "dolthub/dolt-mcp",
+      "runtime": "node",
       "category": "databases"
     },
     {
       "name": "duckdb",
       "description": "DuckDB integration with schema inspection and query capabilities",
-      "package": null,
+      "package": "mcp-server-duckdb",
       "github": "ktanaka101/mcp-server-duckdb",
+      "runtime": "python",
       "category": "databases"
     },
     {
       "name": "excel",
       "description": "Excel workbook manipulation: read/write, worksheets, formatting, charts, pivots",
-      "package": null,
+      "package": "excel-mcp-server",
       "github": "haris-musa/excel-mcp-server",
+      "runtime": "python",
       "category": "databases"
     },
     {
       "name": "greptimedb",
       "description": "Explore and analyze time-series data in GreptimeDB",
-      "package": null,
+      "package": "greptimedb-mcp-server",
       "github": "GreptimeTeam/greptimedb-mcp-server",
+      "runtime": "python",
       "category": "databases"
     },
     {
@@ -523,13 +597,15 @@
       "description": "MCP server for libSQL / Turso databases with connection pooling",
       "package": null,
       "github": "Xexr/mcp-libsql",
+      "runtime": "node",
       "category": "databases"
     },
     {
       "name": "milvus",
       "description": "Search, query, and interact with the Milvus vector database",
-      "package": null,
+      "package": "mcp-server-milvus",
       "github": "zilliztech/mcp-server-milvus",
+      "runtime": "python",
       "category": "databases"
     },
     {
@@ -537,6 +613,7 @@
       "description": "Query and analyze MongoDB collections",
       "package": null,
       "github": "kiliczsh/mcp-mongo-server",
+      "runtime": "node",
       "category": "databases"
     },
     {
@@ -544,20 +621,23 @@
       "description": "Full-featured MCP server for MongoDB databases",
       "package": null,
       "github": "furey/mongodb-lens",
+      "runtime": "node",
       "category": "databases"
     },
     {
       "name": "motherduck",
       "description": "Query and analyze data with MotherDuck and local DuckDB",
-      "package": null,
+      "package": "mcp-server-motherduck",
       "github": "motherduckdb/mcp-server-motherduck",
+      "runtime": "python",
       "category": "databases"
     },
     {
       "name": "mysql",
       "description": "MySQL integration with configurable access controls and schema inspection",
-      "package": null,
+      "package": "mysql_mcp_server",
       "github": "designcomputer/mysql_mcp_server",
+      "runtime": "python",
       "category": "databases"
     },
     {
@@ -565,6 +645,7 @@
       "description": "Neo4j graph database server (schema + read/write Cypher) with graph-backed memory",
       "package": null,
       "github": "neo4j-contrib/mcp-neo4j",
+      "runtime": "node",
       "category": "databases"
     },
     {
@@ -572,6 +653,7 @@
       "description": "Interact with the Neon serverless Postgres platform",
       "package": null,
       "github": "neondatabase/mcp-server-neon",
+      "runtime": "node",
       "category": "databases"
     },
     {
@@ -579,6 +661,7 @@
       "description": "Manage and query Postgres databases, tenants, users, and auth",
       "package": null,
       "github": "niledatabase/nile-mcp-server",
+      "runtime": "node",
       "category": "databases"
     },
     {
@@ -586,13 +669,15 @@
       "description": "Read and write access to NocoDB database",
       "package": null,
       "github": "edwinbernadus/nocodb-mcp-server",
+      "runtime": "node",
       "category": "databases"
     },
     {
       "name": "oceanbase",
       "description": "MCP server for OceanBase database and its tools",
-      "package": null,
+      "package": "mcp-oceanbase",
       "github": "oceanbase/mcp-oceanbase",
+      "runtime": "python",
       "category": "databases"
     },
     {
@@ -600,34 +685,39 @@
       "description": "(Archived reference server) Read-only PostgreSQL access with schema inspection",
       "package": null,
       "github": "modelcontextprotocol/servers-archived",
+      "runtime": "node",
       "category": "databases"
     },
     {
       "name": "qdrant",
       "description": "Semantic memory layer on top of the Qdrant vector search engine",
-      "package": null,
+      "package": "mcp-server-qdrant",
       "github": "qdrant/mcp-server-qdrant",
+      "runtime": "python",
       "category": "databases"
     },
     {
       "name": "redis",
       "description": "Natural-language interface to manage and search data in Redis",
-      "package": null,
+      "package": "redis-mcp-server",
       "github": "redis/mcp-redis",
+      "runtime": "python",
       "category": "databases"
     },
     {
       "name": "singlestore",
       "description": "Interact with the SingleStore database platform",
-      "package": null,
+      "package": "singlestore_mcp_server",
       "github": "singlestore-labs/mcp-server-singlestore",
+      "runtime": "python",
       "category": "databases"
     },
     {
       "name": "snowflake",
       "description": "Snowflake integration with read/write capabilities and insight tracking",
-      "package": null,
+      "package": "mcp_snowflake_server",
       "github": "isaacwasserman/mcp-snowflake-server",
+      "runtime": "python",
       "category": "databases"
     },
     {
@@ -635,20 +725,23 @@
       "description": "(Archived reference server) SQLite interaction and business intelligence",
       "package": null,
       "github": "modelcontextprotocol/servers-archived",
+      "runtime": "node",
       "category": "databases"
     },
     {
       "name": "starrocks",
       "description": "Interact with the StarRocks analytical database",
-      "package": null,
+      "package": "mcp-server-starrocks",
       "github": "StarRocks/mcp-server-starrocks",
+      "runtime": "python",
       "category": "databases"
     },
     {
       "name": "tidb",
       "description": "MCP server implementation for TiDB serverless database",
-      "package": null,
+      "package": "mcp-server-tidb",
       "github": "c4pt0r/mcp-server-tidb",
+      "runtime": "python",
       "category": "databases"
     },
     {
@@ -656,13 +749,15 @@
       "description": "Create crafted UI components inspired by 21st.dev",
       "package": null,
       "github": "21st-dev/magic-mcp",
+      "runtime": "node",
       "category": "dev-tools"
     },
     {
       "name": "calculator",
       "description": "Precise numerical calculations for LLMs",
-      "package": null,
+      "package": "mcp-server-calculator",
       "github": "githejie/mcp-server-calculator",
+      "runtime": "python",
       "category": "dev-tools"
     },
     {
@@ -670,13 +765,15 @@
       "description": "Up-to-date documentation for any prompt",
       "package": "@upstash/context7-mcp",
       "github": "upstash/context7-mcp",
+      "runtime": "node",
       "category": "dev-tools"
     },
     {
       "name": "deepview",
       "description": "Analyze large codebases using Gemini's 1M context window",
-      "package": null,
+      "package": "deepview-mcp",
       "github": "ai-1st/deepview-mcp",
+      "runtime": "python",
       "category": "dev-tools"
     },
     {
@@ -684,6 +781,7 @@
       "description": "Paste a Figma link to get its data in an implement-ready format",
       "package": null,
       "github": "GLips/Figma-Context-MCP",
+      "runtime": "node",
       "category": "dev-tools"
     },
     {
@@ -691,6 +789,7 @@
       "description": "Find and edit code with surgical precision across a codebase",
       "package": null,
       "github": "flesler/mcp-files",
+      "runtime": "node",
       "category": "dev-tools"
     },
     {
@@ -698,6 +797,7 @@
       "description": "Analyze a codebase to identify important files by dependency",
       "package": null,
       "github": "admica/FileScopeMCP",
+      "runtime": "node",
       "category": "dev-tools"
     },
     {
@@ -705,6 +805,7 @@
       "description": "GDB/MI protocol server for remote application debugging",
       "package": null,
       "github": "pansila/mcp_server_gdb",
+      "runtime": "node",
       "category": "dev-tools"
     },
     {
@@ -712,6 +813,7 @@
       "description": "Work on your code with JetBrains IDEs",
       "package": null,
       "github": "JetBrains/mcp-jetbrains",
+      "runtime": "node",
       "category": "dev-tools"
     },
     {
@@ -719,6 +821,7 @@
       "description": "Semantic tools: definitions, references, rename, diagnostics",
       "package": null,
       "github": "isaacphi/mcp-language-server",
+      "runtime": "node",
       "category": "dev-tools"
     },
     {
@@ -726,6 +829,7 @@
       "description": "Maven Central dependency intelligence for JVM build tools",
       "package": null,
       "github": "arvindand/maven-tools-mcp",
+      "runtime": "node",
       "category": "dev-tools"
     },
     {
@@ -733,6 +837,7 @@
       "description": "CLI to install and manage MCP servers",
       "package": null,
       "github": "michaellatman/mcp-get",
+      "runtime": "node",
       "category": "dev-tools"
     },
     {
@@ -740,6 +845,7 @@
       "description": "Set up MCP servers in Claude Desktop",
       "package": null,
       "github": "anaisbetts/mcp-installer",
+      "runtime": "node",
       "category": "dev-tools"
     },
     {
@@ -747,6 +853,7 @@
       "description": "Search for npm packages",
       "package": null,
       "github": "btwiuse/npm-search-mcp-server",
+      "runtime": "node",
       "category": "dev-tools"
     },
     {
@@ -754,6 +861,7 @@
       "description": "AI-powered research and discovery across GitHub and NPM",
       "package": null,
       "github": "bgauryy/octocode-mcp",
+      "runtime": "node",
       "category": "dev-tools"
     },
     {
@@ -761,6 +869,7 @@
       "description": "Token-efficient access to OpenAPI/Swagger specs",
       "package": null,
       "github": "kadykov/mcp-openapi-schema-explorer",
+      "runtime": "node",
       "category": "dev-tools"
     },
     {
@@ -768,6 +877,7 @@
       "description": "Up-to-date info on NPM, Cargo, PyPI, and NuGet packages",
       "package": null,
       "github": "artmann/package-registry-mcp",
+      "runtime": "node",
       "category": "dev-tools"
     },
     {
@@ -775,6 +885,7 @@
       "description": "Connect AI agents to your APIs on Postman",
       "package": null,
       "github": "postmanlabs/postman-mcp-server",
+      "runtime": "node",
       "category": "dev-tools"
     },
     {
@@ -782,6 +893,7 @@
       "description": "Up-to-date documentation for your coding agent",
       "package": null,
       "github": "ref-tools/ref-tools-mcp",
+      "runtime": "node",
       "category": "dev-tools"
     },
     {
@@ -789,6 +901,7 @@
       "description": "Enhance development with Shadcn UI components",
       "package": null,
       "github": "heilgar/shadcn-ui-mcp-server",
+      "runtime": "node",
       "category": "dev-tools"
     },
     {
@@ -796,6 +909,7 @@
       "description": "Integration with SonarQube Server/Cloud for code analysis",
       "package": null,
       "github": "SonarSource/sonarqube-mcp-server",
+      "runtime": "node",
       "category": "dev-tools"
     },
     {
@@ -803,6 +917,7 @@
       "description": "Simplify deployment and management of MCP servers via containers",
       "package": null,
       "github": "StacklokLabs/toolhive",
+      "runtime": "node",
       "category": "dev-tools"
     },
     {
@@ -810,6 +925,7 @@
       "description": "Connect to VS Code and use semantic tools like find_usages",
       "package": null,
       "github": "biegehydra/BifrostMCP",
+      "runtime": "node",
       "category": "dev-tools"
     },
     {
@@ -817,6 +933,7 @@
       "description": "Scaffold, build, run, and test Apple platform apps and simulators",
       "package": null,
       "github": "cameroncooke/xcodebuildmcp",
+      "runtime": "node",
       "category": "dev-tools"
     },
     {
@@ -824,6 +941,7 @@
       "description": "MCP server for Azure DevOps pipelines, repos, and work items",
       "package": null,
       "github": "microsoft/azure-devops-mcp",
+      "runtime": "node",
       "category": "devops"
     },
     {
@@ -831,6 +949,7 @@
       "description": "Manage Buildkite pipelines and builds",
       "package": null,
       "github": "buildkite/buildkite-mcp-server",
+      "runtime": "node",
       "category": "devops"
     },
     {
@@ -838,13 +957,15 @@
       "description": "Enable AI agents to fix build failures from CircleCI",
       "package": null,
       "github": "CircleCI-Public/mcp-server-circleci",
+      "runtime": "node",
       "category": "devops"
     },
     {
       "name": "docker",
       "description": "Manage Docker containers, compose stacks, and logs",
-      "package": null,
+      "package": "docker-mcp",
       "github": "QuantGeekDev/docker-mcp",
+      "runtime": "python",
       "category": "devops"
     },
     {
@@ -852,6 +973,7 @@
       "description": "Access Harness pipelines, repositories, logs, and artifact registries",
       "package": null,
       "github": "harness/mcp-server",
+      "runtime": "node",
       "category": "devops"
     },
     {
@@ -859,6 +981,7 @@
       "description": "Multi-cluster Kubernetes management with ~50 built-in DevOps tools",
       "package": null,
       "github": "weibaohui/k8m",
+      "runtime": "node",
       "category": "devops"
     },
     {
@@ -866,6 +989,7 @@
       "description": "Connect to a Kubernetes cluster; manage pods, deployments, services",
       "package": null,
       "github": "Flux159/mcp-server-kubernetes",
+      "runtime": "node",
       "category": "devops"
     },
     {
@@ -873,6 +997,7 @@
       "description": "Golang-based, extensible Kubernetes MCP server",
       "package": null,
       "github": "strowk/mcp-k8s-go",
+      "runtime": "node",
       "category": "devops"
     },
     {
@@ -880,6 +1005,7 @@
       "description": "Model Kontext Protocol server for Kubernetes with native Go implementation",
       "package": null,
       "github": "StacklokLabs/mkp",
+      "runtime": "node",
       "category": "devops"
     },
     {
@@ -887,13 +1013,15 @@
       "description": "MCP server for TeamCity CI/CD",
       "package": null,
       "github": "itcaat/teamcity-mcp",
+      "runtime": "node",
       "category": "devops"
     },
     {
       "name": "ebook-mcp",
       "description": "Read and interact with local PDF and EPUB ebooks",
-      "package": null,
+      "package": "ebook-mcp",
       "github": "onebirdrocks/ebook-mcp",
+      "runtime": "python",
       "category": "document-processing"
     },
     {
@@ -901,13 +1029,15 @@
       "description": "Split, merge, and interact with JSON files efficiently",
       "package": null,
       "github": "VadimNastoyashchy/json-mcp",
+      "runtime": "node",
       "category": "document-processing"
     },
     {
       "name": "pandoc",
       "description": "Document format conversion using Pandoc",
-      "package": null,
+      "package": "mcp-pandoc",
       "github": "vivekVells/mcp-pandoc",
+      "runtime": "python",
       "category": "document-processing"
     },
     {
@@ -915,6 +1045,7 @@
       "description": "Interact with content on the Contentful platform",
       "package": null,
       "github": "ivo-toby/contentful-mcp",
+      "runtime": "node",
       "category": "e-commerce"
     },
     {
@@ -922,13 +1053,15 @@
       "description": "Product and pricing data: search by barcode/ASIN/URL, price history",
       "package": "@shopsavvy/mcp-server",
       "github": "shopsavvy/shopsavvy-mcp-server",
+      "runtime": "node",
       "category": "e-commerce"
     },
     {
       "name": "storyblok",
       "description": "Manage Storyblok spaces, stories, components, assets, workflows",
-      "package": null,
+      "package": "storyblok-mcp-server",
       "github": "Kiran1689/storyblok-mcp-server",
+      "runtime": "python",
       "category": "e-commerce"
     },
     {
@@ -936,6 +1069,7 @@
       "description": "Interact with Webflow APIs to list and edit site and CMS data",
       "package": null,
       "github": "webflow/mcp-server",
+      "runtime": "node",
       "category": "e-commerce"
     },
     {
@@ -943,13 +1077,15 @@
       "description": "File and folder backup and restoration for AI agents",
       "package": null,
       "github": "hexitex/MCP-Backup-Server",
+      "runtime": "node",
       "category": "file-systems"
     },
     {
       "name": "everything-search",
       "description": "Lightning-fast Windows file search via the Everything SDK",
-      "package": null,
+      "package": "mcp-server-everything-search",
       "github": "mamertofabian/mcp-everything-search",
+      "runtime": "python",
       "category": "file-systems"
     },
     {
@@ -957,6 +1093,7 @@
       "description": "Advanced filesystem ops with large-file handling",
       "package": null,
       "github": "efforthye/fast-filesystem-mcp",
+      "runtime": "node",
       "category": "file-systems"
     },
     {
@@ -964,13 +1101,15 @@
       "description": "Golang implementation for local file system access",
       "package": null,
       "github": "mark3labs/mcp-filesystem-server",
+      "runtime": "node",
       "category": "file-systems"
     },
     {
       "name": "financial-datasets",
       "description": "Stock market API made for AI agents",
-      "package": null,
+      "package": "mcp-server",
       "github": "financial-datasets/mcp-server",
+      "runtime": "python",
       "category": "finance"
     },
     {
@@ -978,6 +1117,7 @@
       "description": "Real-time stock market data, analysis, and trading via LongPort OpenAPI",
       "package": null,
       "github": "longportapp/openapi",
+      "runtime": "node",
       "category": "finance"
     },
     {
@@ -985,6 +1125,7 @@
       "description": "Real-time investment research with private and public market data",
       "package": null,
       "github": "OctagonAI/octagon-mcp-server",
+      "runtime": "node",
       "category": "finance"
     },
     {
@@ -992,13 +1133,15 @@
       "description": "Integrate with PayPal APIs through function calling",
       "package": null,
       "github": "paypal/agent-toolkit",
+      "runtime": "node",
       "category": "finance"
     },
     {
       "name": "ramp",
       "description": "Run analysis on your spend using Ramp's Developer API",
-      "package": null,
+      "package": "ramp-mcp",
       "github": "ramp-public/ramp-mcp",
+      "runtime": "python",
       "category": "finance"
     },
     {
@@ -1006,13 +1149,15 @@
       "description": "Interact with the Stripe API via the agent toolkit",
       "package": null,
       "github": "stripe/agent-toolkit",
+      "runtime": "node",
       "category": "finance"
     },
     {
       "name": "twelve-data",
       "description": "Real-time and historical financial market data",
-      "package": null,
+      "package": "twelvedata-mcp",
       "github": "twelvedata/mcp",
+      "runtime": "python",
       "category": "finance"
     },
     {
@@ -1020,6 +1165,7 @@
       "description": "Interact with accounting data via the official Xero MCP server",
       "package": null,
       "github": "XeroAPI/xero-mcp-server",
+      "runtime": "node",
       "category": "finance"
     },
     {
@@ -1027,6 +1173,7 @@
       "description": "Interact with the BoardGameGeek API",
       "package": null,
       "github": "kkjdaniel/bgg-mcp",
+      "runtime": "node",
       "category": "gaming"
     },
     {
@@ -1034,6 +1181,7 @@
       "description": "Edit, run, debug, and manage scenes in Godot projects",
       "package": null,
       "github": "Coding-Solo/godot-mcp",
+      "runtime": "node",
       "category": "gaming"
     },
     {
@@ -1041,6 +1189,7 @@
       "description": "Real-time gaming data for League of Legends, TFT, and Valorant",
       "package": null,
       "github": "opgginc/opgg-mcp",
+      "runtime": "node",
       "category": "gaming"
     },
     {
@@ -1048,6 +1197,7 @@
       "description": "Tools for the Unity Editor and Unity games",
       "package": null,
       "github": "IvanMurzak/Unity-MCP",
+      "runtime": "node",
       "category": "gaming"
     },
     {
@@ -1055,6 +1205,7 @@
       "description": "Unity3D game engine integration for game development",
       "package": null,
       "github": "CoderGamester/mcp-unity",
+      "runtime": "node",
       "category": "gaming"
     },
     {
@@ -1062,20 +1213,23 @@
       "description": "Turn the Coreflux MQTT broker into an automation hub for IoT",
       "package": null,
       "github": "CorefluxCommunity/CorefluxMCPServer",
+      "runtime": "node",
       "category": "iot"
     },
     {
       "name": "home-assistant",
       "description": "Control smart home devices, query states, manage automations",
-      "package": null,
+      "package": "hass-mcp",
       "github": "voska/hass-mcp",
+      "runtime": "python",
       "category": "iot"
     },
     {
       "name": "homey",
       "description": "Control the Homey smart home system: devices, flows, zones",
-      "package": null,
+      "package": "python-homey-mcp",
       "github": "pigmej/python-homey-mcp",
+      "runtime": "python",
       "category": "iot"
     },
     {
@@ -1083,6 +1237,7 @@
       "description": "Control Nanoleaf smart lights: power, brightness, colors, effects",
       "package": null,
       "github": "srnetadmin/nanoleaf-mcp-server",
+      "runtime": "node",
       "category": "iot"
     },
     {
@@ -1090,6 +1245,7 @@
       "description": "Translation with language detection and context-awareness",
       "package": null,
       "github": "translated/lara-mcp",
+      "runtime": "node",
       "category": "language"
     },
     {
@@ -1097,6 +1253,7 @@
       "description": "Make your agent speak every language via the Lingo.dev engine",
       "package": null,
       "github": "lingodotdev/lingo.dev",
+      "runtime": "node",
       "category": "language"
     },
     {
@@ -1104,6 +1261,7 @@
       "description": "Search campgrounds worldwide, check availability, and book",
       "package": null,
       "github": "campertunity/mcp-server",
+      "runtime": "node",
       "category": "location"
     },
     {
@@ -1111,13 +1269,15 @@
       "description": "(Archived reference server) Location services, directions, and place details",
       "package": null,
       "github": "modelcontextprotocol/servers-archived",
+      "runtime": "node",
       "category": "location"
     },
     {
       "name": "ip2location",
       "description": "Retrieve geolocation information for an IP address",
-      "package": null,
+      "package": "mcp-ip2location-io",
       "github": "ip2location/mcp-ip2location-io",
+      "runtime": "python",
       "category": "location"
     },
     {
@@ -1125,6 +1285,7 @@
       "description": "IP geolocation, network info, proxy/VPN detection",
       "package": null,
       "github": "iplocate/mcp-server-iplocate",
+      "runtime": "node",
       "category": "location"
     },
     {
@@ -1132,13 +1293,15 @@
       "description": "Geocoding, POI search, directions, and isochrones via Mapbox",
       "package": null,
       "github": "mapbox/mcp-server",
+      "runtime": "node",
       "category": "location"
     },
     {
       "name": "qgis",
       "description": "Connect QGIS Desktop to Claude for prompt-assisted GIS work",
-      "package": null,
+      "package": "qgis-mcp",
       "github": "jjsantos01/qgis_mcp",
+      "runtime": "python",
       "category": "location"
     },
     {
@@ -1146,6 +1309,7 @@
       "description": "Programmatic access to Facebook Ads data and management",
       "package": null,
       "github": "gomarble-ai/facebook-ads-mcp-server",
+      "runtime": "node",
       "category": "marketing"
     },
     {
@@ -1153,6 +1317,7 @@
       "description": "Access Fathom Analytics data and reports",
       "package": null,
       "github": "mackenly/mcp-fathom-analytics",
+      "runtime": "node",
       "category": "marketing"
     },
     {
@@ -1160,6 +1325,7 @@
       "description": "Programmatic access to Google Ads data and management",
       "package": null,
       "github": "gomarble-ai/google-ads-mcp-server",
+      "runtime": "node",
       "category": "marketing"
     },
     {
@@ -1167,13 +1333,15 @@
       "description": "Access Google Search Console data",
       "package": null,
       "github": "ahonn/mcp-server-gsc",
+      "runtime": "node",
       "category": "marketing"
     },
     {
       "name": "osp-marketing-tools",
       "description": "Editing codes, writing guidelines, and metadata generation",
-      "package": null,
+      "package": "osp-marketing-tools",
       "github": "open-strategy-partners/osp_marketing_tools",
+      "runtime": "python",
       "category": "marketing"
     },
     {
@@ -1181,13 +1349,15 @@
       "description": "AI video generation: avatars, URL-to-video, text-to-speech",
       "package": null,
       "github": "TSavo/creatify-mcp",
+      "runtime": "node",
       "category": "media"
     },
     {
       "name": "elevenlabs",
       "description": "The official ElevenLabs MCP server (text-to-speech and more)",
-      "package": null,
+      "package": "elevenlabs-mcp",
       "github": "elevenlabs/elevenlabs-mcp",
+      "runtime": "python",
       "category": "media"
     },
     {
@@ -1195,13 +1365,15 @@
       "description": "(Archived reference server) AI image generation using various models",
       "package": null,
       "github": "modelcontextprotocol/servers-archived",
+      "runtime": "node",
       "category": "media"
     },
     {
       "name": "mureka",
       "description": "Generate lyrics, songs, and background music",
-      "package": null,
+      "package": "mureka-mcp",
       "github": "SkyworkAI/Mureka-mcp",
+      "runtime": "python",
       "category": "media"
     },
     {
@@ -1209,6 +1381,7 @@
       "description": "Generate media with Midjourney/Flux/Kling/Hunyuan/Udio/Trellis",
       "package": null,
       "github": "apinetwork/piapi-mcp-server",
+      "runtime": "node",
       "category": "media"
     },
     {
@@ -1216,6 +1389,7 @@
       "description": "Multimodal generation of images, audio, and text (no auth)",
       "package": null,
       "github": "pollinations/model-context-protocol",
+      "runtime": "node",
       "category": "media"
     },
     {
@@ -1223,6 +1397,7 @@
       "description": "Query and analyze Axiom logs, traces, and event data in natural language",
       "package": null,
       "github": "axiomhq/mcp-server-axiom",
+      "runtime": "node",
       "category": "monitoring"
     },
     {
@@ -1230,6 +1405,7 @@
       "description": "Navigate OpenTelemetry resources and query metrics, logs, traces on Dash0",
       "package": null,
       "github": "dash0hq/mcp-dash0",
+      "runtime": "node",
       "category": "monitoring"
     },
     {
@@ -1237,6 +1413,7 @@
       "description": "Search dashboards, investigate incidents, and query datasources",
       "package": null,
       "github": "grafana/mcp-grafana",
+      "runtime": "node",
       "category": "monitoring"
     },
     {
@@ -1244,13 +1421,15 @@
       "description": "Bring real-time production logs, metrics, and traces into your editor",
       "package": null,
       "github": "last9/last9-mcp-server",
+      "runtime": "node",
       "category": "monitoring"
     },
     {
       "name": "logfire",
       "description": "Access OpenTelemetry traces and metrics through Logfire",
-      "package": null,
+      "package": "logfire-mcp",
       "github": "pydantic/logfire-mcp",
+      "runtime": "python",
       "category": "monitoring"
     },
     {
@@ -1258,6 +1437,7 @@
       "description": "Query and interact with Kubernetes environments monitored by Metoro",
       "package": null,
       "github": "metoro-io/metoro-mcp-server",
+      "runtime": "node",
       "category": "monitoring"
     },
     {
@@ -1265,6 +1445,7 @@
       "description": "Raygun API integration for crash reporting and real user monitoring",
       "package": null,
       "github": "MindscapeHQ/mcp-server-raygun",
+      "runtime": "node",
       "category": "monitoring"
     },
     {
@@ -1272,13 +1453,15 @@
       "description": "Official MCP server for Sentry error tracking",
       "package": null,
       "github": "getsentry/sentry-mcp",
+      "runtime": "node",
       "category": "monitoring"
     },
     {
       "name": "signoz",
       "description": "Monitoring, observability, and debugging via the SigNoz APIs",
-      "package": null,
+      "package": "signoz-mcp-server",
       "github": "DrDroidLab/signoz-mcp-server",
+      "runtime": "python",
       "category": "monitoring"
     },
     {
@@ -1286,20 +1469,23 @@
       "description": "Integration with the VictoriaMetrics monitoring APIs",
       "package": null,
       "github": "VictoriaMetrics-Community/mcp-victoriametrics",
+      "runtime": "node",
       "category": "monitoring"
     },
     {
       "name": "apple-books",
       "description": "Turn your Apple Books into a queryable knowledge base",
-      "package": null,
+      "package": "apple-books-mcp",
       "github": "vgnshiyer/apple-books-mcp",
+      "runtime": "python",
       "category": "productivity"
     },
     {
       "name": "apple-notes",
       "description": "Read from the local Apple Notes database (macOS only)",
-      "package": null,
+      "package": "apple-notes-mcp",
       "github": "sirmews/apple-notes-mcp",
+      "runtime": "python",
       "category": "productivity"
     },
     {
@@ -1307,6 +1493,7 @@
       "description": "Manage Basecamp projects, to-dos, card tables, and documents",
       "package": null,
       "github": "georgeantonopoulos/Basecamp-MCP-Server",
+      "runtime": "node",
       "category": "productivity"
     },
     {
@@ -1314,6 +1501,7 @@
       "description": "Manage Cal.com event types, bookings, and scheduling data",
       "package": null,
       "github": "Danielpeter-99/calcom-mcp",
+      "runtime": "node",
       "category": "productivity"
     },
     {
@@ -1321,6 +1509,7 @@
       "description": "Expose CalDAV calendar operations as tools for AI assistants",
       "package": null,
       "github": "dominik1001/caldav-mcp",
+      "runtime": "node",
       "category": "productivity"
     },
     {
@@ -1328,13 +1517,15 @@
       "description": "Interact with task, doc, and project data in Dart",
       "package": null,
       "github": "its-dart/dart-mcp-server",
+      "runtime": "node",
       "category": "productivity"
     },
     {
       "name": "google-keep",
       "description": "Read, create, update, and delete Google Keep notes",
-      "package": null,
+      "package": "keep-mcp",
       "github": "feuerdev/keep-mcp",
+      "runtime": "python",
       "category": "productivity"
     },
     {
@@ -1342,6 +1533,7 @@
       "description": "Connect to the Microsoft 365 suite via Graph API (mail, files, Excel, calendar)",
       "package": null,
       "github": "softeria/ms-365-mcp-server",
+      "runtime": "node",
       "category": "productivity"
     },
     {
@@ -1349,6 +1541,7 @@
       "description": "CalDAV Nextcloud calendar integration: calendars, events, attendees",
       "package": null,
       "github": "Cheffromspace/mcp-nextcloud-calendar",
+      "runtime": "node",
       "category": "productivity"
     },
     {
@@ -1356,27 +1549,31 @@
       "description": "Notion's official MCP server",
       "package": null,
       "github": "makenotion/notion-mcp-server",
+      "runtime": "node",
       "category": "productivity"
     },
     {
       "name": "obsidian",
       "description": "Obsidian vault integration: file management, search, content manipulation",
-      "package": null,
+      "package": "mcp-obsidian",
       "github": "MarkusPfundstein/mcp-obsidian",
+      "runtime": "python",
       "category": "productivity"
     },
     {
       "name": "obsidian-rest",
       "description": "Interact with Obsidian via its REST API",
-      "package": null,
+      "package": "mcp-obsidian",
       "github": "MarkusPfundstein/mcp-obsidian",
+      "runtime": "python",
       "category": "productivity"
     },
     {
       "name": "plane",
       "description": "Official Plane MCP server: projects, work items, cycles",
-      "package": null,
+      "package": "plane-mcp-server",
       "github": "makeplane/plane-mcp-server",
+      "runtime": "python",
       "category": "productivity"
     },
     {
@@ -1384,6 +1581,7 @@
       "description": "Search and retrieve notes from your Slite workspace",
       "package": null,
       "github": "fajarmf/slite-mcp",
+      "runtime": "node",
       "category": "productivity"
     },
     {
@@ -1391,6 +1589,7 @@
       "description": "Access tasks, projects, workflows, and AI agents in Taskade",
       "package": null,
       "github": "taskade/mcp",
+      "runtime": "node",
       "category": "productivity"
     },
     {
@@ -1398,13 +1597,15 @@
       "description": "Natural-language task management for Todoist",
       "package": null,
       "github": "abhiz123/todoist-mcp-server",
+      "runtime": "node",
       "category": "productivity"
     },
     {
       "name": "trello",
       "description": "Work with Trello boards, lists, and cards",
-      "package": null,
+      "package": "trello-mcp",
       "github": "m0xai/trello-mcp-server",
+      "runtime": "python",
       "category": "productivity"
     },
     {
@@ -1412,13 +1613,15 @@
       "description": "Reference / test server exercising prompts, resources, and tools",
       "package": "@modelcontextprotocol/server-everything",
       "github": "modelcontextprotocol/servers",
+      "runtime": "node",
       "category": "reference"
     },
     {
       "name": "fetch",
       "description": "Web content fetching and conversion for efficient LLM usage (Python/uvx: mcp-server-fetch)",
-      "package": null,
+      "package": "mcp-server-fetch",
       "github": "modelcontextprotocol/servers",
+      "runtime": "python",
       "category": "reference"
     },
     {
@@ -1426,13 +1629,15 @@
       "description": "Secure file operations with configurable access controls",
       "package": "@modelcontextprotocol/server-filesystem",
       "github": "modelcontextprotocol/servers",
+      "runtime": "node",
       "category": "reference"
     },
     {
       "name": "git",
       "description": "Read, search, and manipulate Git repositories (Python/uvx: mcp-server-git)",
-      "package": null,
+      "package": "mcp-server-git",
       "github": "modelcontextprotocol/servers",
+      "runtime": "python",
       "category": "reference"
     },
     {
@@ -1440,6 +1645,7 @@
       "description": "Knowledge-graph based persistent memory system",
       "package": "@modelcontextprotocol/server-memory",
       "github": "modelcontextprotocol/servers",
+      "runtime": "node",
       "category": "reference"
     },
     {
@@ -1447,13 +1653,15 @@
       "description": "Dynamic and reflective problem-solving through thought sequences",
       "package": "@modelcontextprotocol/server-sequential-thinking",
       "github": "modelcontextprotocol/servers",
+      "runtime": "node",
       "category": "reference"
     },
     {
       "name": "time",
       "description": "Time and timezone conversion capabilities (Python/uvx: mcp-server-time)",
-      "package": null,
+      "package": "mcp-server-time",
       "github": "modelcontextprotocol/servers",
+      "runtime": "python",
       "category": "reference"
     },
     {
@@ -1461,6 +1669,7 @@
       "description": "Run code in secure sandboxes hosted by E2B",
       "package": null,
       "github": "e2b-dev/mcp-server",
+      "runtime": "node",
       "category": "sandbox"
     },
     {
@@ -1468,6 +1677,7 @@
       "description": "Run Python in a code sandbox",
       "package": null,
       "github": "jamsocket/forevervm",
+      "runtime": "node",
       "category": "sandbox"
     },
     {
@@ -1475,6 +1685,7 @@
       "description": "Self-hosted platform for secure execution of AI-generated code",
       "package": null,
       "github": "microsandbox/microsandbox",
+      "runtime": "node",
       "category": "sandbox"
     },
     {
@@ -1482,6 +1693,7 @@
       "description": "Arbitrary code execution and tool-use platform for LLMs",
       "package": null,
       "github": "riza-io/riza-mcp",
+      "runtime": "node",
       "category": "sandbox"
     },
     {
@@ -1489,13 +1701,15 @@
       "description": "Execute LLM-generated code in a secure, scalable sandbox",
       "package": null,
       "github": "yepcode/mcp-server-js",
+      "runtime": "node",
       "category": "sandbox"
     },
     {
       "name": "ancestry",
       "description": "Read .ged files and genetic data",
-      "package": null,
+      "package": "mcp-server-ancestry",
       "github": "reeeeemo/ancestry-mcp",
+      "runtime": "python",
       "category": "science"
     },
     {
@@ -1503,6 +1717,7 @@
       "description": "Search for book and author information via the Open Library API",
       "package": null,
       "github": "8enSmith/mcp-open-library",
+      "runtime": "node",
       "category": "science"
     },
     {
@@ -1510,20 +1725,23 @@
       "description": "Search 300k+ foods, nutrition facts, and barcodes",
       "package": null,
       "github": "deadletterq/mcp-opennutrition",
+      "runtime": "node",
       "category": "science"
     },
     {
       "name": "paperswithcode",
       "description": "Search research papers, conferences, and codebases",
-      "package": null,
+      "package": "mcp-paperswithcode",
       "github": "hbg/mcp-paperswithcode",
+      "runtime": "python",
       "category": "science"
     },
     {
       "name": "pubmed-fhir",
       "description": "Model Context Protocol server for FHIR healthcare APIs",
-      "package": null,
+      "package": "fhir-mcp-server",
       "github": "wso2/fhir-mcp-server",
+      "runtime": "python",
       "category": "science"
     },
     {
@@ -1531,13 +1749,15 @@
       "description": "Accurate weather forecasts via the AccuWeather API",
       "package": null,
       "github": "TimLukaHorstmann/mcp-weather",
+      "runtime": "node",
       "category": "science"
     },
     {
       "name": "arxiv",
       "description": "Search ArXiv research papers",
-      "package": null,
+      "package": "arxiv-mcp-server",
       "github": "blazickjp/arxiv-mcp-server",
+      "runtime": "python",
       "category": "search-web"
     },
     {
@@ -1545,6 +1765,7 @@
       "description": "Web and local search using Brave's Search API (official)",
       "package": null,
       "github": "brave/brave-search-mcp-server",
+      "runtime": "node",
       "category": "search-web"
     },
     {
@@ -1552,6 +1773,7 @@
       "description": "Search engine made for AIs by Exa",
       "package": "exa-mcp-server",
       "github": "exa-labs/exa-mcp-server",
+      "runtime": "node",
       "category": "search-web"
     },
     {
@@ -1559,6 +1781,7 @@
       "description": "All-in-one SEO and web intelligence toolkit API",
       "package": null,
       "github": "fetchSERP/fetchserp-mcp-server-node",
+      "runtime": "node",
       "category": "search-web"
     },
     {
@@ -1566,6 +1789,7 @@
       "description": "Run network commands like ping, traceroute, mtr, http, dns from a probe network",
       "package": null,
       "github": "jsdelivr/globalping-mcp-server",
+      "runtime": "node",
       "category": "search-web"
     },
     {
@@ -1573,13 +1797,15 @@
       "description": "Google News search with categorization and multi-language support",
       "package": null,
       "github": "ChanMeng666/server-google-news",
+      "runtime": "node",
       "category": "search-web"
     },
     {
       "name": "kagi",
       "description": "Search the web using Kagi's search API",
-      "package": null,
+      "package": "kagimcp",
       "github": "kagisearch/kagimcp",
+      "runtime": "python",
       "category": "search-web"
     },
     {
@@ -1587,6 +1813,7 @@
       "description": "Search articles using the NYTimes API",
       "package": null,
       "github": "angheljf/nyt",
+      "runtime": "node",
       "category": "search-web"
     },
     {
@@ -1594,6 +1821,7 @@
       "description": "One API for search, crawling, and sitemaps",
       "package": null,
       "github": "fatwang2/search1api-mcp",
+      "runtime": "node",
       "category": "search-web"
     },
     {
@@ -1601,6 +1829,7 @@
       "description": "MCP server for the SearXNG metasearch engine",
       "package": null,
       "github": "ihor-sokoliuk/mcp-searxng",
+      "runtime": "node",
       "category": "search-web"
     },
     {
@@ -1608,6 +1837,7 @@
       "description": "Search engine for AI agents (search + extract) powered by Tavily",
       "package": null,
       "github": "tavily-ai/tavily-mcp",
+      "runtime": "node",
       "category": "search-web"
     },
     {
@@ -1615,20 +1845,23 @@
       "description": "Analyze Active Directory attack paths in natural language",
       "package": null,
       "github": "MorDavid/BloodHound-MCP-AI",
+      "runtime": "node",
       "category": "security"
     },
     {
       "name": "cycode",
       "description": "SAST, SCA, secrets, and IaC scanning via Cycode",
-      "package": null,
+      "package": "cycode",
       "github": "cycodehq/cycode-cli",
+      "runtime": "python",
       "category": "security"
     },
     {
       "name": "ida-pro",
       "description": "Automated reverse engineering with IDA Pro",
-      "package": null,
+      "package": "ida-pro-mcp",
       "github": "mrexodia/ida-pro-mcp",
+      "runtime": "python",
       "category": "security"
     },
     {
@@ -1636,6 +1869,7 @@
       "description": "Manage Keycloak users, groups, and realms",
       "package": null,
       "github": "ChristophEnglisch/keycloak-model-context-protocol",
+      "runtime": "node",
       "category": "security"
     },
     {
@@ -1643,13 +1877,15 @@
       "description": "Access the OSV open-source vulnerabilities database",
       "package": null,
       "github": "StacklokLabs/osv-mcp",
+      "runtime": "node",
       "category": "security"
     },
     {
       "name": "semgrep",
       "description": "Scan code for security vulnerabilities using Semgrep",
-      "package": null,
+      "package": "semgrep-mcp",
       "github": "semgrep/mcp",
+      "runtime": "python",
       "category": "security"
     },
     {
@@ -1657,6 +1893,7 @@
       "description": "Whois lookup against domains, IPs, ASNs, and TLDs",
       "package": null,
       "github": "bharathvaj-ganesan/whois-mcp",
+      "runtime": "node",
       "category": "security"
     },
     {
@@ -1664,20 +1901,23 @@
       "description": "Query and search Bluesky feeds and posts",
       "package": null,
       "github": "keturiosakys/bluesky-context-server",
+      "runtime": "node",
       "category": "social-media"
     },
     {
       "name": "instagram-dm",
       "description": "Send Instagram DMs via your LLM",
-      "package": null,
+      "package": "instagram-dm-mcp",
       "github": "trypeggy/instagram_dm_mcp",
+      "runtime": "python",
       "category": "social-media"
     },
     {
       "name": "spotify",
       "description": "Playback control and track/album/artist/playlist management",
-      "package": null,
+      "package": "spotify-mcp",
       "github": "varunneal/spotify-mcp",
+      "runtime": "python",
       "category": "social-media"
     },
     {
@@ -1685,6 +1925,7 @@
       "description": "Get TikTok post details and video subtitles",
       "package": null,
       "github": "Seym0n/tiktok-mcp",
+      "runtime": "node",
       "category": "social-media"
     },
     {
@@ -1692,6 +1933,7 @@
       "description": "Post, search, and delete tweets with OAuth 2.0 and media uploads",
       "package": null,
       "github": "mbelinky/x-mcp-server",
+      "runtime": "node",
       "category": "social-media"
     },
     {
@@ -1699,6 +1941,7 @@
       "description": "Download YouTube subtitles and analyze videos via yt-dlp",
       "package": null,
       "github": "anaisbetts/mcp-youtube",
+      "runtime": "node",
       "category": "social-media"
     },
     {
@@ -1706,6 +1949,7 @@
       "description": "Fetch YouTube subtitles and transcripts",
       "package": null,
       "github": "kimtaeyoon83/mcp-server-youtube-transcript",
+      "runtime": "node",
       "category": "social-media"
     },
     {
@@ -1713,6 +1957,7 @@
       "description": "MCP server integration with Apple Shortcuts",
       "package": null,
       "github": "recursechat/mcp-server-apple-shortcuts",
+      "runtime": "node",
       "category": "system"
     },
     {
@@ -1720,13 +1965,15 @@
       "description": "Interact with Homebrew using natural language",
       "package": null,
       "github": "jeannier/homebrew-mcp",
+      "runtime": "node",
       "category": "system"
     },
     {
       "name": "shell-wcgw",
       "description": "Autonomous shell execution and computer control (macOS)",
-      "package": null,
+      "package": "wcgw",
       "github": "rusiaaman/wcgw",
+      "runtime": "python",
       "category": "system"
     },
     {
@@ -1734,6 +1981,7 @@
       "description": "Interact with tmux sessions, windows, and panes; run commands",
       "package": null,
       "github": "nickgnd/tmux-mcp",
+      "runtime": "node",
       "category": "system"
     },
     {
@@ -1741,6 +1989,7 @@
       "description": "Secure command-line interactions on Windows (PowerShell, CMD, Git Bash)",
       "package": null,
       "github": "SimonB97/win-cli-mcp-server",
+      "runtime": "node",
       "category": "system"
     },
     {
@@ -1748,6 +1997,7 @@
       "description": "Windows automation: mouse, keyboard, screen capture, windows (NutJS)",
       "package": null,
       "github": "Cheffromspace/nutjs-windows-control",
+      "runtime": "node",
       "category": "system"
     },
     {
@@ -1755,6 +2005,7 @@
       "description": "Gitee API: repository, issue, and pull request management",
       "package": null,
       "github": "oschina/mcp-gitee",
+      "runtime": "node",
       "category": "version-control"
     },
     {
@@ -1762,13 +2013,16 @@
       "description": "GitHub's official MCP server: repositories, issues, and pull requests",
       "package": null,
       "github": "github/github-mcp-server",
+      "runtime": "remote",
+      "url": "https://api.githubcopilot.com/mcp",
       "category": "version-control"
     },
     {
       "name": "gitingest",
       "description": "Prompt-friendly summaries of GitHub repos via Gitingest",
-      "package": null,
+      "package": "gitingest-mcp",
       "github": "puravparab/Gitingest-MCP",
+      "runtime": "python",
       "category": "version-control"
     },
     {
@@ -1776,6 +2030,7 @@
       "description": "CLI + MCP wrapping GitKraken, Jira, GitHub, GitLab APIs",
       "package": null,
       "github": "gitkraken/gk-cli",
+      "runtime": "node",
       "category": "version-control"
     },
     {
@@ -1783,6 +2038,7 @@
       "description": "(Archived reference server) GitLab API for project management",
       "package": null,
       "github": "modelcontextprotocol/servers-archived",
+      "runtime": "node",
       "category": "version-control"
     },
     {
@@ -1790,6 +2046,7 @@
       "description": "Phabricator API integration for repository and project management",
       "package": null,
       "github": "baba786/phabricator-mcp-server",
+      "runtime": "node",
       "category": "version-control"
     },
     {
@@ -1797,13 +2054,15 @@
       "description": "Powerful web scraping and crawling for LLM clients",
       "package": null,
       "github": "any4ai/anycrawl-mcp-server",
+      "runtime": "node",
       "category": "web-scraping"
     },
     {
       "name": "apify",
       "description": "Use 3,000+ pre-built Apify Actors to extract data from the web",
-      "package": null,
+      "package": "apify-mcp-evals",
       "github": "apify/actors-mcp-server",
+      "runtime": "python",
       "category": "web-scraping"
     },
     {
@@ -1811,6 +2070,7 @@
       "description": "Discover, extract, and interact with the web at scale",
       "package": null,
       "github": "brightdata/brightdata-mcp",
+      "runtime": "node",
       "category": "web-scraping"
     },
     {
@@ -1818,6 +2078,7 @@
       "description": "Real-time web data with HTML, markdown, and screenshot support",
       "package": null,
       "github": "crawlbase/crawlbase-mcp",
+      "runtime": "node",
       "category": "web-scraping"
     },
     {
@@ -1825,6 +2086,7 @@
       "description": "Simplified retrieval of information from websites and online sources",
       "package": null,
       "github": "Decodo/decodo-mcp-server",
+      "runtime": "node",
       "category": "web-scraping"
     },
     {
@@ -1832,6 +2094,7 @@
       "description": "Extract web data with Firecrawl",
       "package": null,
       "github": "mendableai/firecrawl-mcp-server",
+      "runtime": "node",
       "category": "web-scraping"
     },
     {
@@ -1839,13 +2102,15 @@
       "description": "Fetch the content of a URL as Markdown with Jina Reader",
       "package": null,
       "github": "wong2/mcp-jina-reader",
+      "runtime": "node",
       "category": "web-scraping"
     },
     {
       "name": "oxylabs",
       "description": "Scrape websites with the Oxylabs Web API, dynamic rendering and parsing",
-      "package": null,
+      "package": "oxylabs-mcp",
       "github": "oxylabs/oxylabs-mcp",
+      "runtime": "python",
       "category": "web-scraping"
     },
     {
@@ -1853,6 +2118,7 @@
       "description": "Fast, token-efficient web content extraction to clean Markdown",
       "package": null,
       "github": "just-every/mcp-read-website-fast",
+      "runtime": "node",
       "category": "web-scraping"
     },
     {
@@ -1860,6 +2126,7 @@
       "description": "Integrate real-time Scrapeless Google SERP results into LLM apps",
       "package": null,
       "github": "scrapeless-ai/scrapeless-mcp-server",
+      "runtime": "node",
       "category": "web-scraping"
     },
     {
@@ -1867,6 +2134,7 @@
       "description": "Interact with WebScraping.AI for web data extraction and scraping",
       "package": null,
       "github": "webscraping-ai/webscraping-ai-mcp-server",
+      "runtime": "node",
       "category": "web-scraping"
     }
   ]

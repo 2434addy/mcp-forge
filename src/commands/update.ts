@@ -1,6 +1,6 @@
 import chalk from 'chalk';
 import ora from 'ora';
-import { getServers, saveServer } from '../lib/config.js';
+import { getServers, saveServer, type ServerEntry } from '../lib/config.js';
 import { fetchRegistry, resolveLaunch } from '../lib/registry.js';
 
 export async function updateCommand(): Promise<void> {
@@ -23,21 +23,26 @@ export async function updateCommand(): Promise<void> {
         continue;
       }
       const launch = resolveLaunch(latest);
-      const changed =
-        launch.target !== entry.package ||
-        launch.command !== entry.command ||
-        latest.description !== entry.description ||
-        launch.args.join('\u0000') !== entry.args.join('\u0000');
-      if (!changed) {
-        continue;
-      }
-      saveServer({
+      const next: ServerEntry = {
         ...entry,
         description: latest.description,
         package: launch.target,
-        command: launch.command,
-        args: [...launch.args],
-      });
+        runtime: latest.runtime,
+        command: launch.kind === 'stdio' ? launch.command : undefined,
+        args: launch.kind === 'stdio' ? [...launch.args] : undefined,
+        url: launch.kind === 'remote' ? launch.url : undefined,
+      };
+      const changed =
+        next.description !== entry.description ||
+        next.package !== entry.package ||
+        next.runtime !== entry.runtime ||
+        next.command !== entry.command ||
+        next.url !== entry.url ||
+        (next.args ?? []).join('\u0000') !== (entry.args ?? []).join('\u0000');
+      if (!changed) {
+        continue;
+      }
+      saveServer(next);
       updated.push(entry.name);
     }
 

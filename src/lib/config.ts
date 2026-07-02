@@ -1,15 +1,19 @@
 import os from 'node:os';
 import path from 'node:path';
 import Configstore from 'configstore';
+import type { Runtime } from './registry.js';
 
 export interface ServerEntry {
   name: string;
   description: string;
-  /** What npx runs: an npm package name or a "github:owner/repo" specifier. */
+  /** Display identifier: package name, Docker image, "github:owner/repo" specifier, or remote URL. */
   package: string;
-  /** Executable used to launch the server, e.g. "npx". */
-  command: string;
-  args: string[];
+  /** Executable used to launch the server, e.g. "npx". Absent for remote servers. */
+  command?: string;
+  args?: string[];
+  /** Hosted endpoint for remote servers — they have no local process. */
+  url?: string;
+  runtime?: Runtime;
   env?: Record<string, string>;
   version?: string;
   installedAt: string;

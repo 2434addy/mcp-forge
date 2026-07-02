@@ -2,12 +2,19 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 
-/** Shape of one entry under "mcpServers" in a client config file. */
-export interface McpServerDefinition {
+/** A locally-spawned server entry under "mcpServers" in a client config file. */
+export interface StdioDefinition {
   command: string;
   args: string[];
   env?: Record<string, string>;
 }
+
+/** A hosted (streamable HTTP) server entry — no local process. */
+export interface RemoteDefinition {
+  url: string;
+}
+
+export type McpServerDefinition = StdioDefinition | RemoteDefinition;
 
 export type ConfigureResult =
   | { client: string; status: 'configured'; configPath: string }
@@ -24,8 +31,10 @@ interface ClientTarget {
   configPath: string;
   /** When set, the client is only configured if this path exists. */
   detectPath?: string;
-  /** When set, written entries carry this "type" field (Claude Code's ~/.claude.json format). */
-  entryType?: 'stdio';
+  /** When set, entries carry a "type" discriminator (Claude Code's ~/.claude.json format). */
+  typedEntries?: boolean;
+  /** Whether the client understands remote (URL) entries in this config file. */
+  supportsRemote: boolean;
 }
 
 /** Claude Desktop's config location differs per OS; Claude Code and Cursor live in the home dir everywhere. */
@@ -41,9 +50,9 @@ function clientTargets(): ClientTarget[] {
   }
   const cursorDir = path.join(os.homedir(), '.cursor');
   return [
-    { client: 'Claude Code', configPath: path.join(os.homedir(), '.claude.json'), entryType: 'stdio' },
-    { client: 'Claude Desktop', configPath: desktopConfig },
-    { client: 'Cursor', configPath: path.join(cursorDir, 'mcp.json'), detectPath: cursorDir },
+    { client: 'Claude Code', configPath: path.join(os.homedir(), '.claude.json'), typedEntries: true, supportsRemote: true },
+    { client: 'Claude Desktop', configPath: desktopConfig, supportsRemote: false },
+    { client: 'Cursor', configPath: path.join(cursorDir, 'mcp.json'), detectPath: cursorDir, supportsRemote: true },
   ];
 }
 
@@ -65,6 +74,10 @@ function configureClient(
   if (target.detectPath !== undefined && !fs.existsSync(target.detectPath)) {
     return { client, status: 'skipped', reason: 'not detected' };
   }
+  const isRemote = 'url' in definition;
+  if (isRemote && !target.supportsRemote) {
+    return { client, status: 'skipped', reason: 'remote servers not supported — connect it via claude.ai connectors' };
+  }
 
   const loaded = loadConfig(configPath);
   if (loaded.state === 'invalid') {
@@ -77,8 +90,8 @@ function configureClient(
     typeof existing === 'object' && existing !== null && !Array.isArray(existing)
       ? (existing as Record<string, unknown>)
       : {};
-  mcpServers[serverName] =
-    target.entryType === undefined ? definition : { type: target.entryType, ...definition };
+  // Claude Code discriminates entries by "type": stdio for spawned, http for hosted.
+  mcpServers[serverName] = target.typedEntries ? { type: isRemote ? 'http' : 'stdio', ...definition } : definition;
   config.mcpServers = mcpServers;
 
   try {

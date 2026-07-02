@@ -20,7 +20,10 @@ export function startServer(name: string): RunningServer {
     return { name, pid: entry.pid };
   }
 
-  const { command, args, shell } = toSpawnCommand(entry.command, entry.args);
+  if (entry.command === undefined) {
+    throw new Error(`"${name}" is a remote server (${entry.url ?? entry.package}) — there is no local process to start`);
+  }
+  const { command, args, shell } = toSpawnCommand(entry.command, entry.args ?? []);
   const child = spawn(command, args, {
     shell,
     stdio: 'ignore',

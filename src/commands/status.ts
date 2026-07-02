@@ -17,7 +17,9 @@ export function statusCommand(): void {
     }
     const state = alive ? chalk.green(`● running (pid ${entry.pid})`) : chalk.red('○ stopped');
     console.log(`  ${chalk.cyan(entry.name.padEnd(24))} ${state}`);
-    console.log(chalk.dim(`      ${entry.command} ${entry.args.join(' ')}`));
+    const launchLine =
+      entry.command !== undefined ? `${entry.command} ${(entry.args ?? []).join(' ')}` : `remote → ${entry.url ?? entry.package}`;
+    console.log(chalk.dim(`      ${launchLine}`));
   }
   console.log(chalk.bold(`\n${running}/${entries.length} running\n`));
 }

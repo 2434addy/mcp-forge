@@ -192,6 +192,74 @@ function check(name, ok, detail) {
   check('remove: missing file / entry skipped, nothing created, exit 0', ok, `status=${r.status} stdout=${r.stdout}`);
 }
 
+// 8. python runtime: install git -> uvx entries in all three clients
+{
+  const home = tempHome('py');
+  fs.mkdirSync(path.join(home, '.cursor'), { recursive: true });
+  const r = runCli(home, 'install', 'git');
+  const codePath = path.join(home, '.claude.json');
+  const desktopPath = path.join(home, 'AppData', 'Roaming', 'Claude', 'claude_desktop_config.json');
+  const cursorPath = path.join(home, '.cursor', 'mcp.json');
+  let ok = r.status === 0 && fs.existsSync(codePath) && fs.existsSync(desktopPath) && fs.existsSync(cursorPath);
+  if (ok) {
+    const code = JSON.parse(fs.readFileSync(codePath, 'utf8'));
+    const desktop = JSON.parse(fs.readFileSync(desktopPath, 'utf8'));
+    const cursor = JSON.parse(fs.readFileSync(cursorPath, 'utf8'));
+    ok =
+      JSON.stringify(code.mcpServers.git) ===
+        JSON.stringify({ type: 'stdio', command: 'uvx', args: ['mcp-server-git'] }) &&
+      JSON.stringify(desktop.mcpServers.git) === JSON.stringify({ command: 'uvx', args: ['mcp-server-git'] }) &&
+      JSON.stringify(cursor.mcpServers.git) === JSON.stringify({ command: 'uvx', args: ['mcp-server-git'] });
+  }
+  check('python runtime: uvx entries in all three clients', ok, `status=${r.status} stdout=${r.stdout}`);
+}
+
+// 9. remote runtime: install github -> url entries where supported, Claude Desktop skipped
+{
+  const home = tempHome('remote');
+  fs.mkdirSync(path.join(home, '.cursor'), { recursive: true });
+  const r = runCli(home, 'install', 'github');
+  const codePath = path.join(home, '.claude.json');
+  const desktopPath = path.join(home, 'AppData', 'Roaming', 'Claude', 'claude_desktop_config.json');
+  const cursorPath = path.join(home, '.cursor', 'mcp.json');
+  const url = 'https://api.githubcopilot.com/mcp';
+  let ok = r.status === 0 && fs.existsSync(codePath) && fs.existsSync(cursorPath) && !fs.existsSync(desktopPath);
+  if (ok) {
+    const code = JSON.parse(fs.readFileSync(codePath, 'utf8'));
+    const cursor = JSON.parse(fs.readFileSync(cursorPath, 'utf8'));
+    ok =
+      JSON.stringify(code.mcpServers.github) === JSON.stringify({ type: 'http', url }) &&
+      JSON.stringify(cursor.mcpServers.github) === JSON.stringify({ url }) &&
+      r.stdout.includes('remote servers not supported');
+  }
+  check('remote runtime: http entry in Claude Code, url in Cursor, Desktop skipped', ok, `status=${r.status} stdout=${r.stdout}`);
+
+  const rm = runCli(home, 'remove', 'github');
+  let rmOk = rm.status === 0;
+  if (rmOk) {
+    const code = JSON.parse(fs.readFileSync(codePath, 'utf8'));
+    const cursor = JSON.parse(fs.readFileSync(cursorPath, 'utf8'));
+    rmOk = !('github' in code.mcpServers) && !('github' in cursor.mcpServers);
+  }
+  check('remote runtime: remove cleans Claude Code and Cursor', rmOk, `status=${rm.status} stdout=${rm.stdout}`);
+}
+
+// 10. registry data invariants: every entry annotated, remote entries carry url, python/docker carry package
+{
+  const registry = JSON.parse(fs.readFileSync('src/lib/registry.json', 'utf8'));
+  const servers = registry.servers;
+  const runtimes = new Set(['node', 'python', 'remote', 'docker']);
+  const badRuntime = servers.filter((s) => !runtimes.has(s.runtime));
+  const badRemote = servers.filter((s) => s.runtime === 'remote' && typeof s.url !== 'string');
+  const badPackage = servers.filter((s) => (s.runtime === 'python' || s.runtime === 'docker') && typeof s.package !== 'string');
+  const ok = servers.length === 267 && badRuntime.length === 0 && badRemote.length === 0 && badPackage.length === 0;
+  check(
+    'registry: 267 entries, all annotated with launchable runtimes',
+    ok,
+    `count=${servers.length} badRuntime=${badRuntime.map((s) => s.name)} badRemote=${badRemote.map((s) => s.name)} badPackage=${badPackage.map((s) => s.name)}`,
+  );
+}
+
 let failed = false;
 for (const { name, ok, detail } of results) {
   console.log(`${ok ? 'PASS' : 'FAIL'} ${name}`);
