@@ -1,6 +1,6 @@
 {
   "name": "@2434addy/mcp-forge",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Install, run and manage MCP servers from one cross-platform CLI",
   "type": "module",
   "license": "MIT",
