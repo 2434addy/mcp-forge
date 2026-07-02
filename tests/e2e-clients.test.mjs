@@ -10,6 +10,7 @@ function runCli(home, ...args) {
     env: {
       ...process.env,
       USERPROFILE: home,
+      HOME: home,
       APPDATA: path.join(home, 'AppData', 'Roaming'),
     },
     stdio: ['ignore', 'pipe', 'pipe'],
@@ -26,62 +27,87 @@ function check(name, ok, detail) {
   results.push({ name, ok, detail: ok ? '' : detail });
 }
 
-// 1. fresh: no claude file, .cursor present -> both clients configured
+// 1. fresh: no config files, .cursor present -> all three clients configured
 {
   const home = tempHome('fresh');
   fs.mkdirSync(path.join(home, '.cursor'), { recursive: true });
   const r = runCli(home, 'install', 'memory');
-  const claudePath = path.join(home, 'AppData', 'Roaming', 'Claude', 'claude_desktop_config.json');
+  const codePath = path.join(home, '.claude.json');
+  const desktopPath = path.join(home, 'AppData', 'Roaming', 'Claude', 'claude_desktop_config.json');
   const cursorPath = path.join(home, '.cursor', 'mcp.json');
-  let ok = r.status === 0 && fs.existsSync(claudePath) && fs.existsSync(cursorPath);
+  let ok = r.status === 0 && fs.existsSync(codePath) && fs.existsSync(desktopPath) && fs.existsSync(cursorPath);
   if (ok) {
-    const claude = JSON.parse(fs.readFileSync(claudePath, 'utf8'));
+    const code = JSON.parse(fs.readFileSync(codePath, 'utf8'));
+    const desktop = JSON.parse(fs.readFileSync(desktopPath, 'utf8'));
     const cursor = JSON.parse(fs.readFileSync(cursorPath, 'utf8'));
     ok =
-      JSON.stringify(claude.mcpServers.memory) ===
+      JSON.stringify(code.mcpServers.memory) ===
+        JSON.stringify({ type: 'stdio', command: 'npx', args: ['-y', '@modelcontextprotocol/server-memory'] }) &&
+      JSON.stringify(desktop.mcpServers.memory) ===
         JSON.stringify({ command: 'npx', args: ['-y', '@modelcontextprotocol/server-memory'] }) &&
       cursor.mcpServers.memory.command === 'npx' &&
       r.stdout.includes('✓ Configured in Claude Code') &&
+      r.stdout.includes('✓ Configured in Claude Desktop') &&
       r.stdout.includes('✓ Configured in Cursor');
   }
-  check('fresh: both clients configured', ok, `status=${r.status} stdout=${r.stdout}`);
+  check('fresh: all three clients configured', ok, `status=${r.status} stdout=${r.stdout}`);
 }
 
-// 2. merge: pre-seeded claude config with foreign keys, no .cursor
+// 2. merge: pre-seeded claude configs with foreign keys, no .cursor
 {
   const home = tempHome('merge');
-  const claudePath = path.join(home, 'AppData', 'Roaming', 'Claude', 'claude_desktop_config.json');
-  fs.mkdirSync(path.dirname(claudePath), { recursive: true });
+  const desktopPath = path.join(home, 'AppData', 'Roaming', 'Claude', 'claude_desktop_config.json');
+  fs.mkdirSync(path.dirname(desktopPath), { recursive: true });
   fs.writeFileSync(
-    claudePath,
+    desktopPath,
     JSON.stringify({ globalShortcut: 'Ctrl+Space', mcpServers: { other: { command: 'foo', args: ['--bar'] } } }),
     'utf8',
   );
+  const codePath = path.join(home, '.claude.json');
+  const codeSeed = {
+    numStartups: 42,
+    installMethod: 'npm',
+    projects: { 'C:/work/app': { allowedTools: ['Bash'], history: [{ display: 'hi' }] } },
+    oauthAccount: { accountUuid: 'abc-123', emailAddress: 'adi@example.com' },
+    mcpServers: { other: { type: 'stdio', command: 'foo', args: ['--bar'] } },
+  };
+  fs.writeFileSync(codePath, JSON.stringify(codeSeed), 'utf8');
   const r = runCli(home, 'install', 'memory');
-  const claude = JSON.parse(fs.readFileSync(claudePath, 'utf8'));
+  const desktop = JSON.parse(fs.readFileSync(desktopPath, 'utf8'));
+  const code = JSON.parse(fs.readFileSync(codePath, 'utf8'));
   const ok =
     r.status === 0 &&
-    claude.globalShortcut === 'Ctrl+Space' &&
-    JSON.stringify(claude.mcpServers.other) === JSON.stringify({ command: 'foo', args: ['--bar'] }) &&
-    claude.mcpServers.memory.command === 'npx' &&
+    desktop.globalShortcut === 'Ctrl+Space' &&
+    JSON.stringify(desktop.mcpServers.other) === JSON.stringify({ command: 'foo', args: ['--bar'] }) &&
+    desktop.mcpServers.memory.command === 'npx' &&
+    code.numStartups === 42 &&
+    code.installMethod === 'npm' &&
+    JSON.stringify(code.projects) === JSON.stringify(codeSeed.projects) &&
+    JSON.stringify(code.oauthAccount) === JSON.stringify(codeSeed.oauthAccount) &&
+    JSON.stringify(code.mcpServers.other) === JSON.stringify(codeSeed.mcpServers.other) &&
+    JSON.stringify(code.mcpServers.memory) ===
+      JSON.stringify({ type: 'stdio', command: 'npx', args: ['-y', '@modelcontextprotocol/server-memory'] }) &&
     r.stdout.includes('not detected') &&
     !fs.existsSync(path.join(home, '.cursor', 'mcp.json'));
-  check('merge: foreign keys preserved, cursor skipped', ok, `status=${r.status} stdout=${r.stdout}`);
+  check('merge: foreign keys preserved in both claude configs, cursor skipped', ok, `status=${r.status} stdout=${r.stdout}`);
 }
 
-// 3 + 4. corrupt: invalid JSON left untouched across two installs, exit 0 both times
+// 3 + 4. corrupt: invalid JSON in both claude configs left untouched across two installs, exit 0 both times
 {
   const home = tempHome('corrupt');
-  const claudePath = path.join(home, 'AppData', 'Roaming', 'Claude', 'claude_desktop_config.json');
-  fs.mkdirSync(path.dirname(claudePath), { recursive: true });
+  const desktopPath = path.join(home, 'AppData', 'Roaming', 'Claude', 'claude_desktop_config.json');
+  const codePath = path.join(home, '.claude.json');
+  fs.mkdirSync(path.dirname(desktopPath), { recursive: true });
   const corrupt = '{ this is not json';
-  fs.writeFileSync(claudePath, corrupt, 'utf8');
+  fs.writeFileSync(desktopPath, corrupt, 'utf8');
+  fs.writeFileSync(codePath, corrupt, 'utf8');
 
   const r1 = runCli(home, 'install', 'memory');
   check(
     'corrupt: refused, untouched, install exit 0',
     r1.status === 0 &&
-      fs.readFileSync(claudePath, 'utf8') === corrupt &&
+      fs.readFileSync(desktopPath, 'utf8') === corrupt &&
+      fs.readFileSync(codePath, 'utf8') === corrupt &&
       r1.stdout.includes('left untouched') &&
       (r1.stdout + r1.stderr).includes('Installed'),
     `status=${r1.status} stdout=${r1.stdout}`,
@@ -89,37 +115,46 @@ function check(name, ok, detail) {
 
   const r2 = runCli(home, 'install', 'filesystem');
   check(
-    'second install: corrupt file still untouched',
-    r2.status === 0 && fs.readFileSync(claudePath, 'utf8') === corrupt && r2.stdout.includes('left untouched'),
+    'second install: corrupt files still untouched',
+    r2.status === 0 &&
+      fs.readFileSync(desktopPath, 'utf8') === corrupt &&
+      fs.readFileSync(codePath, 'utf8') === corrupt &&
+      r2.stdout.includes('left untouched'),
     `status=${r2.status} stdout=${r2.stdout}`,
   );
 }
 
-// 5. remove: entry deleted from both clients, foreign keys preserved
+// 5. remove: entry deleted from all clients, foreign keys preserved
 {
   const home = tempHome('rm');
   fs.mkdirSync(path.join(home, '.cursor'), { recursive: true });
-  const claudePath = path.join(home, 'AppData', 'Roaming', 'Claude', 'claude_desktop_config.json');
+  const desktopPath = path.join(home, 'AppData', 'Roaming', 'Claude', 'claude_desktop_config.json');
+  const codePath = path.join(home, '.claude.json');
   const cursorPath = path.join(home, '.cursor', 'mcp.json');
-  fs.mkdirSync(path.dirname(claudePath), { recursive: true });
+  fs.mkdirSync(path.dirname(desktopPath), { recursive: true });
   fs.writeFileSync(
-    claudePath,
+    desktopPath,
     JSON.stringify({ globalShortcut: 'Ctrl+Space', mcpServers: { other: { command: 'foo', args: ['--bar'] } } }),
     'utf8',
   );
+  fs.writeFileSync(codePath, JSON.stringify({ numStartups: 7, mcpServers: {} }), 'utf8');
   runCli(home, 'install', 'memory');
   const r = runCli(home, 'remove', 'memory');
-  const claude = JSON.parse(fs.readFileSync(claudePath, 'utf8'));
+  const desktop = JSON.parse(fs.readFileSync(desktopPath, 'utf8'));
+  const code = JSON.parse(fs.readFileSync(codePath, 'utf8'));
   const cursor = JSON.parse(fs.readFileSync(cursorPath, 'utf8'));
   const ok =
     r.status === 0 &&
-    !('memory' in claude.mcpServers) &&
-    JSON.stringify(claude.mcpServers.other) === JSON.stringify({ command: 'foo', args: ['--bar'] }) &&
-    claude.globalShortcut === 'Ctrl+Space' &&
+    !('memory' in desktop.mcpServers) &&
+    JSON.stringify(desktop.mcpServers.other) === JSON.stringify({ command: 'foo', args: ['--bar'] }) &&
+    desktop.globalShortcut === 'Ctrl+Space' &&
+    !('memory' in code.mcpServers) &&
+    code.numStartups === 7 &&
     !('memory' in cursor.mcpServers) &&
     r.stdout.includes('✓ Removed from Claude Code') &&
+    r.stdout.includes('✓ Removed from Claude Desktop') &&
     r.stdout.includes('✓ Removed from Cursor');
-  check('remove: deleted from both clients, foreign keys preserved', ok, `status=${r.status} stdout=${r.stdout}`);
+  check('remove: deleted from all clients, foreign keys preserved', ok, `status=${r.status} stdout=${r.stdout}`);
 }
 
 // 6. remove: corrupt claude config left untouched, remove still exit 0

@@ -59,7 +59,10 @@ MCP_FORGE_REGISTRY_URL=https://example.com/registry.json mcp-forge list
 
 `mcp-forge install` also registers the server with detected MCP clients:
 
-- **Claude Code** — `%APPDATA%\Claude\claude_desktop_config.json` (Windows),
+- **Claude Code** — `~/.claude.json`, entries written as
+  `{"type": "stdio", "command": "npx", "args": [...]}`. All other keys in the
+  file are preserved; only `mcpServers` is touched. Created if missing.
+- **Claude Desktop** — `%APPDATA%\Claude\claude_desktop_config.json` (Windows),
   `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS),
   `~/.config/Claude/claude_desktop_config.json` (Linux). Created if missing.
 - **Cursor** — `~/.cursor/mcp.json`, configured only when `~/.cursor` exists.

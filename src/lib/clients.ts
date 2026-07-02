@@ -24,28 +24,31 @@ interface ClientTarget {
   configPath: string;
   /** When set, the client is only configured if this path exists. */
   detectPath?: string;
+  /** When set, written entries carry this "type" field (Claude Code's ~/.claude.json format). */
+  entryType?: 'stdio';
 }
 
-/** Claude's config location differs per OS; Cursor uses ~/.cursor everywhere. */
+/** Claude Desktop's config location differs per OS; Claude Code and Cursor live in the home dir everywhere. */
 function clientTargets(): ClientTarget[] {
-  let claudeConfig: string;
+  let desktopConfig: string;
   if (process.platform === 'win32') {
     const appData = process.env.APPDATA || path.join(os.homedir(), 'AppData', 'Roaming');
-    claudeConfig = path.join(appData, 'Claude', 'claude_desktop_config.json');
+    desktopConfig = path.join(appData, 'Claude', 'claude_desktop_config.json');
   } else if (process.platform === 'darwin') {
-    claudeConfig = path.join(os.homedir(), 'Library', 'Application Support', 'Claude', 'claude_desktop_config.json');
+    desktopConfig = path.join(os.homedir(), 'Library', 'Application Support', 'Claude', 'claude_desktop_config.json');
   } else {
-    claudeConfig = path.join(os.homedir(), '.config', 'Claude', 'claude_desktop_config.json');
+    desktopConfig = path.join(os.homedir(), '.config', 'Claude', 'claude_desktop_config.json');
   }
   const cursorDir = path.join(os.homedir(), '.cursor');
   return [
-    { client: 'Claude Code', configPath: claudeConfig },
+    { client: 'Claude Code', configPath: path.join(os.homedir(), '.claude.json'), entryType: 'stdio' },
+    { client: 'Claude Desktop', configPath: desktopConfig },
     { client: 'Cursor', configPath: path.join(cursorDir, 'mcp.json'), detectPath: cursorDir },
   ];
 }
 
 /**
- * Register the server in every detected MCP client (Claude Code, Cursor).
+ * Register the server in every detected MCP client (Claude Code, Claude Desktop, Cursor).
  * Never throws: each client reports configured/skipped/failed independently,
  * and a corrupt config file is left untouched rather than overwritten.
  */
@@ -74,7 +77,8 @@ function configureClient(
     typeof existing === 'object' && existing !== null && !Array.isArray(existing)
       ? (existing as Record<string, unknown>)
       : {};
-  mcpServers[serverName] = definition;
+  mcpServers[serverName] =
+    target.entryType === undefined ? definition : { type: target.entryType, ...definition };
   config.mcpServers = mcpServers;
 
   try {
@@ -114,7 +118,7 @@ function loadConfig(configPath: string): LoadedConfig {
 }
 
 /**
- * Remove the server from every detected MCP client (Claude Code, Cursor).
+ * Remove the server from every detected MCP client (Claude Code, Claude Desktop, Cursor).
  * Mirrors configureClients: never throws, each client reports
  * removed/skipped/failed independently, a corrupt config file is left
  * untouched rather than overwritten, and a missing file is never created.
