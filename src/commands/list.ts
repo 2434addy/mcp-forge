@@ -1,6 +1,6 @@
 import chalk from 'chalk';
 import { getServers } from '../lib/config.js';
-import { fetchRegistry } from '../lib/registry.js';
+import { fetchRegistry, type RegistryServer } from '../lib/registry.js';
 import { isRunning } from '../lib/runner.js';
 
 export async function listCommand(): Promise<void> {
@@ -18,10 +18,26 @@ export async function listCommand(): Promise<void> {
     console.log(`  ${chalk.cyan(entry.name.padEnd(24))} ${state}  ${chalk.dim(entry.package)}`);
   }
 
-  console.log(chalk.bold('\nAvailable in registry'));
+  const byCategory = new Map<string, RegistryServer[]>();
   for (const server of registry) {
-    const marker = installedNames.has(server.name) ? chalk.green('✓') : ' ';
-    console.log(`  ${marker} ${chalk.cyan(server.name.padEnd(22))} ${chalk.dim(server.description)}`);
+    const bucket = byCategory.get(server.category);
+    if (bucket) {
+      bucket.push(server);
+    } else {
+      byCategory.set(server.category, [server]);
+    }
+  }
+
+  console.log(
+    chalk.bold('\nAvailable in registry') +
+      chalk.dim(` — ${registry.length} servers in ${byCategory.size} categories`),
+  );
+  for (const category of [...byCategory.keys()].sort()) {
+    console.log(chalk.magenta(`\n  ${category}`));
+    for (const server of byCategory.get(category) ?? []) {
+      const marker = installedNames.has(server.name) ? chalk.green('✓') : ' ';
+      console.log(`  ${marker} ${chalk.cyan(server.name.padEnd(28))} ${chalk.dim(server.description)}`);
+    }
   }
   console.log();
 }

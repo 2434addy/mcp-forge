@@ -19,7 +19,7 @@ npm link        # exposes the `mcp-forge` binary globally
 
 | Command | Description |
 | --- | --- |
-| `mcp-forge install <server-name>` | Install an MCP server from the registry |
+| `mcp-forge install [server-name]` | Install an MCP server from the registry, or a custom source via `--npm` / `--github` |
 | `mcp-forge remove <server-name>` | Stop and remove an installed server |
 | `mcp-forge list` | List installed servers and the full registry catalog |
 | `mcp-forge update` | Refresh installed server definitions from the registry |
@@ -29,7 +29,10 @@ npm link        # exposes the `mcp-forge` binary globally
 ### Example
 
 ```sh
-mcp-forge install filesystem
+mcp-forge install filesystem                      # from the bundled registry
+mcp-forge install --npm mcp-server-kubernetes     # any npm package
+mcp-forge install --github acme/cool-mcp-server   # any GitHub repo (runs via npx github:)
+mcp-forge install mytool --npm some-mcp-package   # custom server name
 mcp-forge status
 mcp-forge ui        # ↑/↓ move · s start/stop · r refresh · q quit
 ```
@@ -40,15 +43,17 @@ State is stored in your home directory — `~/.mcp-forge/config.json`
 (`C:\Users\<you>\.mcp-forge\config.json` on Windows). Paths are always built
 with `path.join`, never hardcoded separators.
 
-A custom registry can be supplied via an environment variable pointing at a
-JSON array of server definitions:
+The catalog ships with the CLI: `src/lib/registry.json` (copied to `dist/lib`
+by the build) lists 267 servers across 34 categories, each entry pointing at an
+npm package and/or a GitHub repo. The CLI works fully offline.
+
+A custom registry can be supplied via an environment variable pointing at JSON
+with the same schema (a bare array or `{ "servers": [...] }`); the bundled
+catalog is the fallback when the remote is unreachable:
 
 ```sh
 MCP_FORGE_REGISTRY_URL=https://example.com/registry.json mcp-forge list
 ```
-
-Without it, a built-in catalog of well-known servers is used, so the CLI works
-offline.
 
 ## Client auto-configuration
 
@@ -87,7 +92,8 @@ src/
   commands/   one file per CLI command (install, remove, list, update, status, ui)
   lib/
     config.ts    config at ~/.mcp-forge/config.json (Configstore)
-    registry.ts  available MCP servers (built-in catalog + optional remote)
+    registry.ts    loads registry.json (bundled catalog + optional remote override)
+    registry.json  server catalog: 267 servers, 34 categories
     runner.ts    start/stop server processes, PID tracking
     windows.ts   Windows-specific spawning and kill fixes
   index.ts    commander entry point

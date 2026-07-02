@@ -5,7 +5,7 @@ import Configstore from 'configstore';
 export interface ServerEntry {
   name: string;
   description: string;
-  /** npm package that provides the server. */
+  /** What npx runs: an npm package name or a "github:owner/repo" specifier. */
   package: string;
   /** Executable used to launch the server, e.g. "npx". */
   command: string;

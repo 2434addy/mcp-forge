@@ -17,8 +17,10 @@ program
 
 program
   .command('install')
-  .argument('<server-name>', 'registry name (or npm package) of the MCP server')
-  .description('Install an MCP server from the registry')
+  .argument('[server-name]', 'registry name (or npm package) of the MCP server')
+  .option('--npm <package>', 'install any npm package as an MCP server (bypasses the registry)')
+  .option('--github <owner/repo>', 'install an MCP server from a GitHub repo (bypasses the registry)')
+  .description('Install an MCP server from the registry or a custom source')
   .action(installCommand);
 
 program

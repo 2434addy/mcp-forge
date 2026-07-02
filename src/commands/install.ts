@@ -2,34 +2,122 @@ import chalk from 'chalk';
 import ora from 'ora';
 import { configureClients } from '../lib/clients.js';
 import { getServer, saveServer } from '../lib/config.js';
-import { fetchRegistry, findServer } from '../lib/registry.js';
+import { fetchRegistry, findServer, resolveLaunch } from '../lib/registry.js';
 
-export async function installCommand(serverName: string): Promise<void> {
-  const spinner = ora(`Resolving "${serverName}" in the registry...`).start();
+export interface InstallOptions {
+  /** Install any npm package as an MCP server, bypassing the registry. */
+  npm?: string;
+  /** Install from a GitHub repo ("owner/repo") via npx github:, bypassing the registry. */
+  github?: string;
+}
+
+/** Fully resolved definition ready to persist and register with clients. */
+interface InstallTarget {
+  name: string;
+  description: string;
+  /** What npx runs: an npm package name or a "github:owner/repo" specifier. */
+  target: string;
+  command: string;
+  args: string[];
+}
+
+/** Normalize "owner/repo", "github:owner/repo" or a github.com URL to "owner/repo". */
+function parseGithubRepo(input: string): string | undefined {
+  const repo = input
+    .replace(/^github:/, '')
+    .replace(/^https?:\/\/(www\.)?github\.com\//, '')
+    .replace(/\.git$/, '')
+    .replace(/\/+$/, '');
+  return /^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/.test(repo) ? repo : undefined;
+}
+
+export async function installCommand(serverName: string | undefined, options: InstallOptions = {}): Promise<void> {
+  if (options.npm !== undefined && options.github !== undefined) {
+    console.error(chalk.red('--npm and --github are mutually exclusive.'));
+    process.exitCode = 1;
+    return;
+  }
+  if (serverName === undefined && options.npm === undefined && options.github === undefined) {
+    console.error(
+      chalk.red(
+        `Nothing to install. Pass a registry name (see ${chalk.cyan('mcp-forge list')}) or use --npm <package> / --github <owner/repo>.`,
+      ),
+    );
+    process.exitCode = 1;
+    return;
+  }
+
+  const spinner = ora('Resolving server...').start();
   try {
-    if (getServer(serverName)) {
-      spinner.warn(`"${serverName}" is already installed. Run ${chalk.cyan('mcp-forge update')} to refresh it.`);
+    let target: InstallTarget;
+    if (options.npm !== undefined) {
+      target = {
+        name: serverName ?? options.npm,
+        description: `Custom install from npm: ${options.npm}`,
+        target: options.npm,
+        command: 'npx',
+        args: ['-y', options.npm],
+      };
+    } else if (options.github !== undefined) {
+      const repo = parseGithubRepo(options.github);
+      if (!repo) {
+        spinner.fail(`--github expects "owner/repo" (or a github.com URL), got "${options.github}".`);
+        process.exitCode = 1;
+        return;
+      }
+      const match = /^[A-Za-z0-9_.-]+\/([A-Za-z0-9_.-]+)$/.exec(repo);
+      const spec = `github:${repo}`;
+      target = {
+        name: serverName ?? (match ? match[1] : repo),
+        description: `Custom install from GitHub: ${repo}`,
+        target: spec,
+        command: 'npx',
+        args: ['-y', spec],
+      };
+    } else {
+      const name = serverName ?? '';
+      spinner.text = `Resolving "${name}" in the registry...`;
+      if (getServer(name)) {
+        spinner.warn(`"${name}" is already installed. Run ${chalk.cyan('mcp-forge update')} to refresh it.`);
+        return;
+      }
+      const server = await findServer(name);
+      if (!server) {
+        spinner.fail(`"${name}" was not found in the registry.`);
+        const available = await fetchRegistry();
+        console.error(
+          chalk.dim(
+            `Run ${chalk.cyan('mcp-forge list')} to browse the ${available.length} available servers, or install a custom source with ${chalk.cyan('--npm <package>')} / ${chalk.cyan('--github <owner/repo>')}.`,
+          ),
+        );
+        process.exitCode = 1;
+        return;
+      }
+      const launch = resolveLaunch(server);
+      target = {
+        name: server.name,
+        description: server.description,
+        target: launch.target,
+        command: launch.command,
+        args: [...launch.args],
+      };
+    }
+
+    if (getServer(target.name)) {
+      spinner.warn(`"${target.name}" is already installed. Run ${chalk.cyan('mcp-forge update')} to refresh it.`);
       return;
     }
-    const server = await findServer(serverName);
-    if (!server) {
-      spinner.fail(`"${serverName}" was not found in the registry.`);
-      const available = await fetchRegistry();
-      console.error(chalk.dim(`Available: ${available.map((entry) => entry.name).join(', ')}`));
-      process.exitCode = 1;
-      return;
-    }
+
     saveServer({
-      name: server.name,
-      description: server.description,
-      package: server.package,
-      command: server.command,
-      args: [...server.args],
-      version: server.version,
+      name: target.name,
+      description: target.description,
+      package: target.target,
+      command: target.command,
+      args: [...target.args],
       installedAt: new Date().toISOString(),
     });
-    spinner.succeed(`Installed ${chalk.green(server.name)} ${chalk.dim(`(${server.package})`)}`);
-    for (const result of configureClients(server.name, { command: server.command, args: [...server.args] })) {
+    spinner.succeed(`Installed ${chalk.green(target.name)} ${chalk.dim(`(${target.target})`)}`);
+    for (const result of configureClients(target.name, { command: target.command, args: [...target.args] })) {
       if (result.status === 'configured') {
         console.log(`${chalk.green(`✓ Configured in ${result.client}`)} ${chalk.dim(`→ ${result.configPath}`)}`);
       } else if (result.status === 'skipped') {

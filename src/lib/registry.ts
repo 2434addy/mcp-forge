@@ -1,64 +1,87 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import chalk from 'chalk';
 
+/** One entry in the server catalog (src/lib/registry.json). */
 export interface RegistryServer {
   name: string;
   description: string;
-  package: string;
-  command: string;
-  args: string[];
-  version?: string;
+  /** npm package providing the server, when one is published. */
+  package: string | null;
+  /** GitHub repo ("owner/repo") hosting the server, when known. */
+  github: string | null;
+  category: string;
 }
 
-/** Point this at a raw JSON array of RegistryServer objects to use a custom registry. */
+/** Concrete way to launch a server, derived from a registry entry. */
+export interface LaunchSpec {
+  /** What npx runs: an npm package name or a "github:owner/repo" specifier. */
+  target: string;
+  command: string;
+  args: string[];
+}
+
+/** Point this at a JSON registry (same schema as registry.json) to use a custom registry. */
 const REGISTRY_URL = process.env.MCP_FORGE_REGISTRY_URL;
 const FETCH_TIMEOUT_MS = 5_000;
 
-/**
- * Built-in catalog of well-known MCP servers. Used when no remote registry is
- * configured or the remote is unreachable, so the CLI works offline.
- */
-const BUILTIN_REGISTRY: RegistryServer[] = [
-  {
-    name: 'filesystem',
-    description: 'Read and write files under allowed directories',
-    package: '@modelcontextprotocol/server-filesystem',
-    command: 'npx',
-    args: ['-y', '@modelcontextprotocol/server-filesystem', '.'],
-  },
-  {
-    name: 'memory',
-    description: 'Knowledge-graph based persistent memory',
-    package: '@modelcontextprotocol/server-memory',
-    command: 'npx',
-    args: ['-y', '@modelcontextprotocol/server-memory'],
-  },
-  {
-    name: 'sequential-thinking',
-    description: 'Structured step-by-step problem solving',
-    package: '@modelcontextprotocol/server-sequential-thinking',
-    command: 'npx',
-    args: ['-y', '@modelcontextprotocol/server-sequential-thinking'],
-  },
-  {
-    name: 'everything',
-    description: 'Reference server exercising every MCP feature',
-    package: '@modelcontextprotocol/server-everything',
-    command: 'npx',
-    args: ['-y', '@modelcontextprotocol/server-everything'],
-  },
-  {
-    name: 'github',
-    description: 'GitHub repositories, issues and pull requests',
-    package: '@modelcontextprotocol/server-github',
-    command: 'npx',
-    args: ['-y', '@modelcontextprotocol/server-github'],
-  },
-];
+/** Catalog shipped with the CLI; the build copies it next to this module in dist/lib. */
+const BUNDLED_REGISTRY_PATH = path.join(path.dirname(fileURLToPath(import.meta.url)), 'registry.json');
 
-/** Fetch the list of available servers, falling back to the built-in catalog. */
+let bundledCache: RegistryServer[] | undefined;
+
+function isRegistryServer(value: unknown): value is RegistryServer {
+  if (typeof value !== 'object' || value === null) {
+    return false;
+  }
+  if (!('name' in value) || typeof value.name !== 'string') {
+    return false;
+  }
+  if (!('description' in value) || typeof value.description !== 'string') {
+    return false;
+  }
+  if (!('package' in value) || (typeof value.package !== 'string' && value.package !== null)) {
+    return false;
+  }
+  if (!('github' in value) || (typeof value.github !== 'string' && value.github !== null)) {
+    return false;
+  }
+  if (!('category' in value) || typeof value.category !== 'string') {
+    return false;
+  }
+  return true;
+}
+
+/** Accept either a bare array of servers or a `{ "servers": [...] }` wrapper. */
+function extractServers(payload: unknown, source: string): RegistryServer[] {
+  let list: unknown = payload;
+  if (typeof payload === 'object' && payload !== null && !Array.isArray(payload) && 'servers' in payload) {
+    list = payload.servers;
+  }
+  if (!Array.isArray(list)) {
+    throw new Error(`${source} has no server list`);
+  }
+  const servers = list.filter(isRegistryServer);
+  if (servers.length !== list.length) {
+    throw new Error(`${source} contains ${list.length - servers.length} malformed entries`);
+  }
+  return servers;
+}
+
+/** Load and validate the registry.json bundled with the CLI. Cached per process. */
+function loadBundledRegistry(): RegistryServer[] {
+  if (!bundledCache) {
+    const raw = fs.readFileSync(BUNDLED_REGISTRY_PATH, 'utf8');
+    bundledCache = extractServers(JSON.parse(raw), `bundled registry (${BUNDLED_REGISTRY_PATH})`);
+  }
+  return bundledCache;
+}
+
+/** Fetch the list of available servers, falling back to the bundled catalog. */
 export async function fetchRegistry(): Promise<RegistryServer[]> {
   if (!REGISTRY_URL) {
-    return BUILTIN_REGISTRY;
+    return loadBundledRegistry();
   }
   try {
     const response = await fetch(REGISTRY_URL, { signal: AbortSignal.timeout(FETCH_TIMEOUT_MS) });
@@ -66,14 +89,11 @@ export async function fetchRegistry(): Promise<RegistryServer[]> {
       throw new Error(`registry responded with HTTP ${response.status}`);
     }
     const data: unknown = await response.json();
-    if (!Array.isArray(data)) {
-      throw new Error('registry payload is not a JSON array');
-    }
-    return data as RegistryServer[];
+    return extractServers(data, REGISTRY_URL);
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
-    console.error(chalk.yellow(`warn: remote registry unavailable (${message}); using built-in catalog`));
-    return BUILTIN_REGISTRY;
+    console.error(chalk.yellow(`warn: remote registry unavailable (${message}); using bundled catalog`));
+    return loadBundledRegistry();
   }
 }
 
@@ -81,4 +101,19 @@ export async function fetchRegistry(): Promise<RegistryServer[]> {
 export async function findServer(name: string): Promise<RegistryServer | undefined> {
   const registry = await fetchRegistry();
   return registry.find((server) => server.name === name || server.package === name);
+}
+
+/**
+ * Derive how to launch a registry entry. npm packages win over GitHub repos;
+ * GitHub-only servers run through npx's `github:` specifier support.
+ */
+export function resolveLaunch(server: RegistryServer): LaunchSpec {
+  if (server.package !== null) {
+    return { target: server.package, command: 'npx', args: ['-y', server.package] };
+  }
+  if (server.github !== null) {
+    const target = `github:${server.github}`;
+    return { target, command: 'npx', args: ['-y', target] };
+  }
+  throw new Error(`Registry entry "${server.name}" has neither an npm package nor a GitHub repo`);
 }

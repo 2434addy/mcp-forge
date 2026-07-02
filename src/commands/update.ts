@@ -1,7 +1,7 @@
 import chalk from 'chalk';
 import ora from 'ora';
 import { getServers, saveServer } from '../lib/config.js';
-import { fetchRegistry } from '../lib/registry.js';
+import { fetchRegistry, resolveLaunch } from '../lib/registry.js';
 
 export async function updateCommand(): Promise<void> {
   const spinner = ora('Refreshing server definitions from the registry...').start();
@@ -22,22 +22,21 @@ export async function updateCommand(): Promise<void> {
         missing.push(entry.name);
         continue;
       }
+      const launch = resolveLaunch(latest);
       const changed =
-        latest.package !== entry.package ||
-        latest.command !== entry.command ||
+        launch.target !== entry.package ||
+        launch.command !== entry.command ||
         latest.description !== entry.description ||
-        latest.args.join('\u0000') !== entry.args.join('\u0000') ||
-        (latest.version !== undefined && latest.version !== entry.version);
+        launch.args.join('\u0000') !== entry.args.join('\u0000');
       if (!changed) {
         continue;
       }
       saveServer({
         ...entry,
         description: latest.description,
-        package: latest.package,
-        command: latest.command,
-        args: [...latest.args],
-        version: latest.version,
+        package: launch.target,
+        command: launch.command,
+        args: [...launch.args],
       });
       updated.push(entry.name);
     }
@@ -48,7 +47,7 @@ export async function updateCommand(): Promise<void> {
       spinner.succeed(`Updated ${updated.length} server definition(s): ${updated.join(', ')}`);
     }
     if (missing.length > 0) {
-      console.log(chalk.yellow(`  no longer in registry: ${missing.join(', ')}`));
+      console.log(chalk.yellow(`  not in the registry (custom install or removed): ${missing.join(', ')}`));
     }
   } catch (error) {
     spinner.fail(error instanceof Error ? error.message : String(error));
