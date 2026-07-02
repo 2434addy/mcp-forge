@@ -14,6 +14,11 @@ export type ConfigureResult =
   | { client: string; status: 'skipped'; reason: string }
   | { client: string; status: 'failed'; reason: string };
 
+export type RemoveResult =
+  | { client: string; status: 'removed'; configPath: string }
+  | { client: string; status: 'skipped'; reason: string }
+  | { client: string; status: 'failed'; reason: string };
+
 interface ClientTarget {
   client: string;
   configPath: string;
@@ -58,22 +63,11 @@ function configureClient(
     return { client, status: 'skipped', reason: 'not detected' };
   }
 
-  let config: Record<string, unknown> = {};
-  if (fs.existsSync(configPath)) {
-    try {
-      const raw = fs.readFileSync(configPath, 'utf8');
-      if (raw.trim().length > 0) {
-        const parsed: unknown = JSON.parse(raw);
-        if (typeof parsed !== 'object' || parsed === null || Array.isArray(parsed)) {
-          return { client, status: 'failed', reason: `${configPath} is not a JSON object — left untouched` };
-        }
-        config = parsed as Record<string, unknown>;
-      }
-    } catch (error) {
-      const message = error instanceof Error ? error.message : String(error);
-      return { client, status: 'failed', reason: `could not parse ${configPath} (${message}) — left untouched` };
-    }
+  const loaded = loadConfig(configPath);
+  if (loaded.state === 'invalid') {
+    return { client, status: 'failed', reason: loaded.reason };
   }
+  const config = loaded.state === 'ok' ? loaded.config : {};
 
   const existing = config.mcpServers;
   const mcpServers =
@@ -91,4 +85,76 @@ function configureClient(
     return { client, status: 'failed', reason: `could not write ${configPath} (${message})` };
   }
   return { client, status: 'configured', configPath };
+}
+
+type LoadedConfig =
+  | { state: 'missing' }
+  | { state: 'ok'; config: Record<string, unknown> }
+  | { state: 'invalid'; reason: string };
+
+/** Read and validate a client config file without ever throwing. */
+function loadConfig(configPath: string): LoadedConfig {
+  if (!fs.existsSync(configPath)) {
+    return { state: 'missing' };
+  }
+  try {
+    const raw = fs.readFileSync(configPath, 'utf8');
+    if (raw.trim().length === 0) {
+      return { state: 'ok', config: {} };
+    }
+    const parsed: unknown = JSON.parse(raw);
+    if (typeof parsed !== 'object' || parsed === null || Array.isArray(parsed)) {
+      return { state: 'invalid', reason: `${configPath} is not a JSON object — left untouched` };
+    }
+    return { state: 'ok', config: parsed as Record<string, unknown> };
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    return { state: 'invalid', reason: `could not parse ${configPath} (${message}) — left untouched` };
+  }
+}
+
+/**
+ * Remove the server from every detected MCP client (Claude Code, Cursor).
+ * Mirrors configureClients: never throws, each client reports
+ * removed/skipped/failed independently, a corrupt config file is left
+ * untouched rather than overwritten, and a missing file is never created.
+ */
+export function removeFromClients(serverName: string): RemoveResult[] {
+  return clientTargets().map((target) => removeFromClient(target, serverName));
+}
+
+function removeFromClient(target: ClientTarget, serverName: string): RemoveResult {
+  const { client, configPath } = target;
+  if (target.detectPath !== undefined && !fs.existsSync(target.detectPath)) {
+    return { client, status: 'skipped', reason: 'not detected' };
+  }
+
+  const loaded = loadConfig(configPath);
+  if (loaded.state === 'missing') {
+    return { client, status: 'skipped', reason: 'no config file' };
+  }
+  if (loaded.state === 'invalid') {
+    return { client, status: 'failed', reason: loaded.reason };
+  }
+
+  const { config } = loaded;
+  const existing = config.mcpServers;
+  if (
+    typeof existing !== 'object' ||
+    existing === null ||
+    Array.isArray(existing) ||
+    !(serverName in existing)
+  ) {
+    return { client, status: 'skipped', reason: 'not configured' };
+  }
+  const mcpServers = existing as Record<string, unknown>;
+  delete mcpServers[serverName];
+
+  try {
+    fs.writeFileSync(configPath, `${JSON.stringify(config, null, 2)}\n`, 'utf8');
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    return { client, status: 'failed', reason: `could not write ${configPath} (${message})` };
+  }
+  return { client, status: 'removed', configPath };
 }
